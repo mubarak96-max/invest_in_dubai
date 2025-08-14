@@ -36,13 +36,16 @@ export default function HeroSection() {
       
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/50"></div>
+      
+      {/* Top gradient overlay for nav readability */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/70 to-transparent pointer-events-none"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
           {/* Main Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight">
             Find Your
-            <span className="block text-primary-100">Dream Home</span>
+            <span className="block text-blue-200">Dream Home</span>
           </h1>
           
           {/* Supporting Text */}
@@ -107,7 +110,7 @@ export default function HeroSection() {
                     value={searchData.location}
                     onChange={handleInputChange}
                     placeholder="Enter area, community, or landmark"
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 bg-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   />
                 </div>
               </div>
@@ -125,7 +128,7 @@ export default function HeroSection() {
                     name="propertyType"
                     value={searchData.propertyType}
                     onChange={handleInputChange}
-                    className="block w-full pl-10 pr-8 py-3 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors appearance-none bg-white"
+                    className="block w-full pl-10 pr-8 py-3 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none bg-white"
                   >
                     <option value="buy">Buy</option>
                     <option value="rent">Rent</option>
@@ -152,7 +155,7 @@ export default function HeroSection() {
                     name="priceRange"
                     value={searchData.priceRange}
                     onChange={handleInputChange}
-                    className="block w-full pl-10 pr-8 py-3 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors appearance-none bg-white"
+                    className="block w-full pl-10 pr-8 py-3 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors appearance-none bg-white"
                   >
                     <option value="">Any Price</option>
                     <option value="0-500000">Up to AED 500K</option>
@@ -173,7 +176,7 @@ export default function HeroSection() {
               <div className="lg:col-span-1 lg:flex lg:items-end">
                 <button
                   type="submit"
-                  className="w-full lg:w-auto bg-primary-900 hover:bg-primary-800 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center touch:py-4"
+                  className="w-full lg:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center touch:py-4"
                 >
                   <Search className="h-5 w-5 lg:mr-0" />
                   <span className="ml-2 lg:hidden">Search Properties</span>
