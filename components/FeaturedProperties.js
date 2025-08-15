@@ -159,13 +159,13 @@ export default function FeaturedProperties() {
   return (
     <section className="py-16 lg:py-24 bg-accent-off-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                 {/* Section Header */}
-         <div className="text-center mb-12 lg:mb-16">
+        {/* Section Header */}
+        <div className="text-center mb-12 lg:mb-16">
            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-600 mb-4">
-             Featured Properties
-           </h2>
+            Featured Properties
+          </h2>
            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
-         </div>
+        </div>
 
         {/* Properties Carousel */}
         <div className="relative">
@@ -189,22 +189,22 @@ export default function FeaturedProperties() {
           {/* Properties Container */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 px-4">
             {getVisibleProperties().map((property) => (
-                             <div
-                 key={property.id}
+            <div
+              key={property.id}
                  className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
-               >
-                {/* Property Image */}
+            >
+              {/* Property Image */}
                 <div className="relative h-64 sm:h-72 overflow-hidden">
                   <img
                     src={property.image}
                     alt={property.address}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  
-                  {/* Category Tag */}
-                  <div className={getCategoryStyle(property.category)}>
-                    {property.category}
-                  </div>
+                
+                {/* Category Tag */}
+                <div className={getCategoryStyle(property.category)}>
+                  {property.category}
+                </div>
 
                   {/* Gallery indicator */}
                   <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center">
@@ -215,9 +215,9 @@ export default function FeaturedProperties() {
                     </div>
                     <span className="text-xs font-medium text-gray-700">12</span>
                   </div>
-                </div>
+              </div>
 
-                {/* Property Details */}
+              {/* Property Details */}
                 <div className="p-6">
                   {/* Price - Large and prominent */}
                   <div className="mb-3">
@@ -233,44 +233,44 @@ export default function FeaturedProperties() {
                     </p>
                   </div>
 
-                  {/* Address */}
+                {/* Address */}
                   <div className="flex items-start mb-4">
                     <MapPin className="w-4 h-4 text-gray-500 mt-0.5 mr-2 flex-shrink-0" />
                     <h3 className="text-sm font-medium text-gray-800 leading-tight">
-                      {property.address}
-                    </h3>
-                  </div>
+                    {property.address}
+                  </h3>
+                </div>
 
                   {/* Property Features - Horizontal layout */}
                   <div className="flex items-center space-x-6 mb-4 text-gray-600">
-                    <div className="flex items-center">
-                      <Bed className="w-4 h-4 mr-1" />
-                      <span className="text-sm font-medium">{property.beds}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Bath className="w-4 h-4 mr-1" />
-                      <span className="text-sm font-medium">{property.baths}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Square className="w-4 h-4 mr-1" />
-                      <span className="text-sm font-medium">{property.sqft.toLocaleString()} sq ft</span>
-                    </div>
+                  <div className="flex items-center">
+                    <Bed className="w-4 h-4 mr-1" />
+                    <span className="text-sm font-medium">{property.beds}</span>
                   </div>
+                  <div className="flex items-center">
+                    <Bath className="w-4 h-4 mr-1" />
+                    <span className="text-sm font-medium">{property.baths}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Square className="w-4 h-4 mr-1" />
+                      <span className="text-sm font-medium">{property.sqft.toLocaleString()} sq ft</span>
+                  </div>
+                </div>
 
-                  {/* Handover Date (for off-plan properties) */}
-                  {property.handover && (
+                {/* Handover Date (for off-plan properties) */}
+                {property.handover && (
                     <div className="flex items-center mb-4 text-gray-600">
-                      <Calendar className="w-4 h-4 mr-2" />
-                      <span className="text-sm font-medium">Handover: {property.handover}</span>
-                    </div>
-                  )}
+                    <Calendar className="w-4 h-4 mr-2" />
+                    <span className="text-sm font-medium">Handover: {property.handover}</span>
+                  </div>
+                )}
 
                   {/* Favorite button */}
                   <div className="flex justify-between items-center">
                     <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
-                      <span>View Details</span>
-                      <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                    </button>
+                  <span>View Details</span>
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                </button>
                     
                     <button className="ml-3 p-3 text-gray-400 hover:text-red-500 transition-colors duration-200">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -278,18 +278,18 @@ export default function FeaturedProperties() {
                       </svg>
                     </button>
                   </div>
-                </div>
               </div>
-            ))}
+            </div>
+          ))}
           </div>
         </div>
 
-                 {/* View All Properties Button */}
-         <div className="text-center mt-12">
+        {/* View All Properties Button */}
+        <div className="text-center mt-12">
            <button className="bg-white hover:bg-blue-50 text-blue-600 font-semibold py-4 px-8 rounded-lg border-2 border-blue-300 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md">
-             View All Properties
-           </button>
-         </div>
+            View All Properties
+          </button>
+        </div>
       </div>
     </section>
   );
