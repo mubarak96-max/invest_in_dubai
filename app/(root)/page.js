@@ -6,6 +6,7 @@ import FreeConsultationCTA from '@/components/FreeConsultationCTA'
 import HeroSection from '@/components/Hero'
 import InvestmentCalculator from '@/components/InvestmentCalculator'
 import MarketStatsBanner from '@/components/MarketStatsBanner'
+import RecentTransactions from '@/components/RecentTransactions'
 import React from 'react'
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
     <div>
         <HeroSection />
         <FeaturesSection />
+        <RecentTransactions />
         <MarketStatsBanner/>
         <FeaturedProperties />
         <InvestmentCalculator />
