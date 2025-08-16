@@ -5,10 +5,10 @@ import ContactAgentForm from './ContactAgentForm';
 
 export default function PropertyAgent({ property }) {
   const agent = property.agent || {
-    name: 'Provident Advisor',
+    name: 'Invest in Dubai Advisor',
     title: 'Property Consultant',
     phone: '+971 4 123 4567',
-    email: 'advisor@provident.ae',
+    email: 'advisor@investindubai.ae',
     image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200',
     rating: 4.8,
     deals: 120,

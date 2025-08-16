@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,14 +16,11 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
                      {/* Logo */}
            <div className="flex-shrink-0">
-             <div className="flex items-center">
-               <span className="text-2xl lg:text-3xl font-bold text-blue-600">
-                 Provident
-               </span>
-               <span className="text-2xl lg:text-3xl font-bold text-blue-400">
-                 .
-               </span>
-             </div>
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="text-2xl lg:text-3xl font-bold text-gray-800">
+                Invest in Dubai
+              </span>
+            </Link>
            </div>
 
                      {/* Desktop Navigation */}

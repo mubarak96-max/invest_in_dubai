@@ -1,11 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Heart, Share2, Calendar, MapPin, Bed, Bath, Square, Eye } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { ChevronLeft, ChevronRight, Heart, Share2, Calendar, MapPin, Bed, Bath, Square, Eye, Maximize } from 'lucide-react';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
 
 export default function PropertyHero({ property }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [openLightbox, setOpenLightbox] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const stickyRef = useRef(null);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => 
@@ -41,15 +46,40 @@ export default function PropertyHero({ property }) {
     }).format(price);
   };
 
+  const slides = property.images.map(src => ({ src }));
+
+  useEffect(() => {
+    if (!stickyRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([e]) => setIsSticky(e.intersectionRatio < 1),
+      { threshold: [1] }
+    );
+
+    observer.observe(stickyRef.current);
+
+    return () => {
+      if (stickyRef.current) {
+        observer.unobserve(stickyRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="bg-white">
       {/* Image Gallery */}
-      <div className="relative h-96 lg:h-[500px] overflow-hidden">
+      <div className="relative h-96 lg:h-[500px] overflow-hidden group cursor-pointer" onClick={() => setOpenLightbox(true)}>
         <img
           src={property.images[currentImageIndex]}
           alt={property.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
+        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <div className="flex items-center space-x-2 bg-black/50 text-white px-4 py-2 rounded-full">
+            <Maximize className="w-5 h-5" />
+            <span>View Photos</span>
+          </div>
+        </div>
         
         {/* Image Navigation */}
         <button
@@ -119,7 +149,7 @@ export default function PropertyHero({ property }) {
       </div>
 
       {/* Thumbnail & Actions Bar */}
-      <div className="border-t border-gray-200 bg-white z-20">
+      <div ref={stickyRef} className={`border-t border-gray-200 bg-white z-20 transition-shadow ${isSticky ? 'shadow-md sticky top-0' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center space-x-2 overflow-x-auto">
@@ -153,6 +183,14 @@ export default function PropertyHero({ property }) {
           </div>
         </div>
       </div>
+
+      <Lightbox
+        open={openLightbox}
+        close={() => setOpenLightbox(false)}
+        slides={slides}
+        index={currentImageIndex}
+        on={{ view: ({ index }) => setCurrentImageIndex(index) }}
+      />
     </div>
   );
 }
