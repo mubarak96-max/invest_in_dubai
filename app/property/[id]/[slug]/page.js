@@ -7,15 +7,16 @@ import PropertyLocation from '@/components/property/PropertyLocation';
 import PropertyFinancials from '@/components/property/PropertyFinancials';
 import PropertyAgent from '@/components/property/PropertyAgent';
 import SimilarProperties from '@/components/property/SimilarProperties';
-import { getPropertyData } from '@/lib/propertyData';
+import { getPropertyData } from '@/lib/projectData';
 
-export default function PropertyPageWithSlug({ params }) {
-  const property = getPropertyData(params?.id);
+export default async function PropertyPageWithSlug({ params }) {
+  const { id, slug } = await params;
+  const property = getPropertyData(id);
   if (!property) notFound();
 
   // Redirect if slug doesn't match the property's canonical slug
-  if (params.slug !== property.slug) {
-    redirect(`/property/${params.id}/${property.slug}`);
+  if (slug !== property.slug) {
+    redirect(`/property/${id}/${property.slug}`);
   }
 
   return (
@@ -85,7 +86,8 @@ export default function PropertyPageWithSlug({ params }) {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
-  const property = getPropertyData(params.id);
+  const { id } = await params;
+  const property = getPropertyData(id);
   
   if (!property) {
     return {

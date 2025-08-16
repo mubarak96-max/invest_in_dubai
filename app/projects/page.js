@@ -1,30 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import { featuredProperties } from '@/lib/propertyData';
+import { usePropertySearch } from '@/hooks/usePropertySearch';
+import { featuredProperties } from '@/lib/projectData';
 import ProjectList from '@/components/project/ProjectList';
 import PropertySearchForm from '@/components/property/PropertySearchForm';
 
 export default function ProjectsPage() {
   const initialProjects = featuredProperties.filter(p => p.category === 'off-plan');
-  const [filteredProjects, setFilteredProjects] = useState(initialProjects);
-
-  const handleSearch = (filters) => {
-    const { searchTerm, propertyType, bedrooms, minPrice, maxPrice } = filters;
-    const results = initialProjects.filter(p => {
-      const searchTermMatch = searchTerm 
-        ? p.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-          p.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          (p.developer && p.developer.toLowerCase().includes(searchTerm.toLowerCase()))
-        : true;
-      const typeMatch = propertyType ? p.propertyTypes.includes(propertyType) : true;
-      const bedMatch = bedrooms ? p.beds.split(',').map(b => b.trim()).includes(bedrooms) : true;
-      const minPriceMatch = minPrice ? p.price >= parseInt(minPrice) : true;
-      const maxPriceMatch = maxPrice ? p.price <= parseInt(maxPrice) : true;
-      return searchTermMatch && typeMatch && bedMatch && minPriceMatch && maxPriceMatch;
-    });
-    setFilteredProjects(results);
-  };
+  const { filteredProperties: filteredProjects, handleSearch } = usePropertySearch(initialProjects);
 
   return (
     <div className="bg-gray-50">

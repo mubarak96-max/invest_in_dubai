@@ -1,10 +1,11 @@
-import { getPropertyData } from '@/lib/propertyData';
+import { getPropertyData } from '@/lib/projectData';
 import { notFound, redirect } from 'next/navigation';
 import ProjectPageClient from '@/components/project/ProjectPageClient';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
-  const project = getPropertyData(params.id);
+  const { id } = await params;
+  const project = getPropertyData(id);
   if (!project) {
     return { title: 'Project Not Found' };
   }
@@ -14,15 +15,16 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function ProjectPage({ params }) {
-  const project = getPropertyData(params.id);
+export default async function ProjectPage({ params }) {
+  const { id, slug } = await params;
+  const project = getPropertyData(id);
 
   if (!project || project.category !== 'off-plan') {
     notFound();
   }
 
   // Redirect if slug doesn't match the project's canonical slug
-  if (params.slug !== project.slug) {
+  if (slug !== project.slug) {
     redirect(`/project/${project.id}/${project.slug}`);
   }
 

@@ -77,10 +77,12 @@ export default function PropertyOverview({ property }) {
             <span className="text-sm font-medium text-gray-700">RERA Approved</span>
             <span className="text-sm text-gray-500">#{property.reraPermit}</span>
           </div>
-          <div className="flex items-center space-x-2">
-            <Award className="w-5 h-5 text-blue-600" />
-            <span className="text-sm font-medium text-gray-700">Developer: {property.developer.name}</span>
-          </div>
+          {property.developer?.name && (
+            <div className="flex items-center space-x-2">
+              <Award className="w-5 h-5 text-blue-600" />
+              <span className="text-sm font-medium text-gray-700">Developer: {property.developer.name}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

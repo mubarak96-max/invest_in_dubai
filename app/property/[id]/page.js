@@ -1,9 +1,10 @@
 import { notFound, redirect } from 'next/navigation';
-import { getPropertyData } from '@/lib/propertyData';
+import { getPropertyData } from '@/lib/projectData';
 
 // This page's sole purpose is to redirect to the canonical URL with a slug.
-export default function PropertyPage({ params }) {
-  const property = getPropertyData(params?.id);
+export default async function PropertyPage({ params }) {
+  const { id } = await params;
+  const property = getPropertyData(id);
 
   if (!property) {
     notFound();

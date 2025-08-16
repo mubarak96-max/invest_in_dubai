@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { MapPin, Tag, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function ProjectHero({ project }) {
+export default function ProjectHero({ project, onRegisterInterest }) {
   const { title, developer, address, priceDisplay, handover, projectStatus, propertyTypes, images } = project;
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -51,7 +51,7 @@ export default function ProjectHero({ project }) {
             </div>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <button className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">Register Interest</button>
+                <button onClick={onRegisterInterest} className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">Register Interest</button>
                 <button className="bg-black/60 backdrop-blur-md text-white font-bold py-3 px-8 rounded-lg hover:bg-black/80 transition-all transform hover:scale-105 shadow-lg">Download Brochure</button>
             </div>
         </div>

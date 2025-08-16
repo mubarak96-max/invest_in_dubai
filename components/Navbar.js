@@ -50,18 +50,24 @@ export default function Navbar() {
               >
                 Projects
               </Link>
-               <a
-                 href="#"
-                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
-               >
-                 Developers
-               </a>
-               <a
-                 href="#"
-                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
-               >
-                 Areas
-               </a>
+               <Link
+                href="/developers"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Developers
+              </Link>
+              <Link
+                href="/property-map"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Property Map
+              </Link>
+               <Link
+                href="/areas"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Areas
+              </Link>
                <a
                  href="#"
                  className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
@@ -155,18 +161,18 @@ export default function Navbar() {
           >
             Projects
           </Link>
-          <a
-            href="#"
+          <Link
+            href="/developers"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Developers
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/areas"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Areas
-          </a>
+          </Link>
           <a
             href="#"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"

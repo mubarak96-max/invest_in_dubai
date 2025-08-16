@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { featuredProperties } from '@/lib/propertyData';
+import { usePropertySearch } from '@/hooks/usePropertySearch';
+import { featuredProperties } from '@/lib/projectData';
 import PropertyList from '@/components/property/PropertyList';
 import PropertySearchForm from '@/components/property/PropertySearchForm';
 
@@ -11,21 +11,7 @@ export default function BuyPage() {
     p => p.category === 'buy' || p.category === 'off plan'
   );
 
-  const [filteredProperties, setFilteredProperties] = useState(initialProperties);
-
-  const handleSearch = ({ searchTerm, propertyType, bedrooms, minPrice, maxPrice }) => {
-    const results = initialProperties.filter(p => {
-      const searchTermMatch = searchTerm ? 
-        p.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        p.address.toLowerCase().includes(searchTerm.toLowerCase()) : true;
-      const typeMatch = propertyType ? p.type === propertyType : true;
-      const bedMatch = bedrooms ? p.beds === parseInt(bedrooms) : true;
-      const minPriceMatch = minPrice ? p.price >= parseInt(minPrice) : true;
-      const maxPriceMatch = maxPrice ? p.price <= parseInt(maxPrice) : true;
-      return searchTermMatch && typeMatch && bedMatch && minPriceMatch && maxPriceMatch;
-    });
-    setFilteredProperties(results);
-  };
+  const { filteredProperties, handleSearch } = usePropertySearch(initialProperties);
 
   return (
     <div className="bg-gray-50">

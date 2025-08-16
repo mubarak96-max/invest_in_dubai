@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { communities } from '@/lib/propertyData';
 
 export default function CommunitiesSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,57 +20,6 @@ export default function CommunitiesSection() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Sample community data
-  const communities = [
-    {
-      id: 1,
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Downtown Dubai",
-      description: "The heart of Dubai featuring the iconic Burj Khalifa, luxury shopping, and world-class entertainment.",
-      properties: "2,500+ Properties",
-      avgPrice: "AED 2.5M"
-    },
-    {
-      id: 2,
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Dubai Marina",
-      description: "Waterfront living with stunning views, luxury yachts, and a vibrant lifestyle by the sea.",
-      properties: "1,800+ Properties",
-      avgPrice: "AED 1.8M"
-    },
-    {
-      id: 3,
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Palm Jumeirah",
-      description: "Iconic palm-shaped island offering exclusive beachfront properties and luxury resorts.",
-      properties: "950+ Properties",
-      avgPrice: "AED 4.2M"
-    },
-    {
-      id: 4,
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Business Bay",
-      description: "Modern business district with sleek towers, corporate headquarters, and premium residences.",
-      properties: "1,200+ Properties",
-      avgPrice: "AED 1.5M"
-    },
-    {
-      id: 5,
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Dubai Hills Estate",
-      description: "Family-friendly community with golf courses, parks, and spacious villas in a serene environment.",
-      properties: "800+ Properties",
-      avgPrice: "AED 2.8M"
-    },
-    {
-      id: 6,
-      image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Jumeirah Village Circle",
-      description: "Affordable luxury with modern apartments, community amenities, and excellent connectivity.",
-      properties: "1,500+ Properties",
-      avgPrice: "AED 850K"
-    }
-  ];
 
   // Carousel navigation functions
   const nextSlide = () => {
@@ -168,10 +119,10 @@ export default function CommunitiesSection() {
                   </div>
 
                   {/* Learn More Button */}
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
+                  <Link href={`/areas/${community.slug}`} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
                     <span>Learn More</span>
                     <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -180,9 +131,9 @@ export default function CommunitiesSection() {
 
         {/* View All Communities Button */}
         <div className="text-center mt-12">
-          <button className="bg-white hover:bg-blue-50 text-blue-600 font-semibold py-4 px-8 rounded-lg border-2 border-blue-300 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md">
+          <Link href="/areas" className="bg-white hover:bg-blue-50 text-blue-600 font-semibold py-4 px-8 rounded-lg border-2 border-blue-300 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md">
             View All Communities
-          </button>
+          </Link>
         </div>
       </div>
     </section>

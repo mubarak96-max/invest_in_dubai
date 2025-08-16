@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { featuredProperties } from '@/lib/propertyData';
+import { featuredProperties } from '@/lib/projectData';
 import PropertyList from '@/components/property/PropertyList';
 import PropertySearchForm from '@/components/property/PropertySearchForm';
 

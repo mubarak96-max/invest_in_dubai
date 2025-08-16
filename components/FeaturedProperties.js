@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Bed, Bath, Square, Calendar, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { featuredProperties } from '@/lib/propertyData';
+import { featuredProperties } from '@/lib/projectData';
 
 export default function FeaturedProperties() {
   const [currentIndex, setCurrentIndex] = useState(0);
