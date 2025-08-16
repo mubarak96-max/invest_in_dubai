@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Bed, Bath, Square, Calendar, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { featuredProperties } from '@/lib/propertyData';
 
 export default function FeaturedProperties() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -18,105 +20,7 @@ export default function FeaturedProperties() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Sample property data
-  const properties = [
-    {
-      id: 1,
-      image: "https://images.bayut.com/thumbnails/787645519-800x600.webp",
-      address: "Downtown Dubai, Burj Vista Tower",
-      price: "AED 2,850,000",
-      beds: 2,
-      baths: 3,
-      sqft: 1450,
-      category: "buy",
-      handover: null,
-      type: "Apartment"
-    },
-    {
-      id: 2,
-      image: "https://images.bayut.com/thumbnails/787645519-800x600.webp",
-      address: "Dubai Marina, Marina Gate",
-      price: "AED 120,000/year",
-      beds: 1,
-      baths: 2,
-      sqft: 980,
-      category: "rent",
-      handover: null,
-      type: "Studio"
-    },
-    {
-      id: 3,
-      image: "https://images.bayut.com/thumbnails/787645519-800x600.webp",
-      address: "Business Bay, Damac Heights",
-      price: "AED 1,650,000",
-      beds: 3,
-      baths: 2,
-      sqft: 1850,
-      category: "off plan",
-      handover: "Q4 2025",
-      type: "Apartment"
-    },
-    {
-      id: 4,
-      image: "https://images.bayut.com/thumbnails/787645519-800x600.webp",
-      address: "Palm Jumeirah, Atlantis Residences",
-      price: "AED 8,500,000",
-      beds: 4,
-      baths: 5,
-      sqft: 3200,
-      category: "buy",
-      handover: null,
-      type: "Villa"
-    },
-    {
-      id: 5,
-      image: "https://images.bayut.com/thumbnails/787645519-800x600.webp",
-      address: "Dubai Hills Estate, Parkways",
-      price: "AED 85,000/year",
-      beds: 2,
-      baths: 2,
-      sqft: 1200,
-      category: "rent",
-      handover: null,
-      type: "Townhouse"
-    },
-    {
-      id: 6,
-      image: "https://images.bayut.com/thumbnails/787645519-800x600.webp",
-      address: "DIFC, Index Tower",
-      price: "AED 3,200,000",
-      beds: 3,
-      baths: 3,
-      sqft: 1680,
-      category: "off plan",
-      handover: "Q2 2026",
-      type: "Apartment"
-    },
-    {
-      id: 7,
-      image: "https://images.bayut.com/thumbnails/787645519-800x600.webp",
-      address: "Jumeirah Village Circle, Green Diamond",
-      price: "AED 1,150,000",
-      beds: 1,
-      baths: 1,
-      sqft: 750,
-      category: "buy",
-      handover: null,
-      type: "Studio"
-    },
-    {
-      id: 8,
-      image: "https://images.bayut.com/thumbnails/787645519-800x600.webp",
-      address: "Dubai South, Mag 5 Boulevard",
-      price: "AED 950,000",
-      beds: 2,
-      baths: 2,
-      sqft: 1100,
-      category: "off plan",
-      handover: "Q1 2025",
-      type: "Apartment"
-    }
-  ];
+  const properties = featuredProperties;
 
   const getCategoryStyle = (category) => {
     const baseStyle = "absolute bottom-4 left-4 px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wide";
@@ -132,10 +36,7 @@ export default function FeaturedProperties() {
     }
   };
 
-  const formatPrice = (price) => {
-    return price.replace(/(\d{1,3}),(\d{3})/g, '$1,$2');
-  };
-
+  
   // Carousel navigation functions
   const nextSlide = () => {
     const itemsToShow = isDesktop ? 3 : 1;
@@ -197,7 +98,7 @@ export default function FeaturedProperties() {
                 <div className="relative h-64 sm:h-72 overflow-hidden">
                   <img
                     src={property.image}
-                    alt={property.address}
+                    alt={property.title}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 
@@ -213,7 +114,7 @@ export default function FeaturedProperties() {
                         <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
                       </svg>
                     </div>
-                    <span className="text-xs font-medium text-gray-700">12</span>
+                    <span className="text-xs font-medium text-gray-700">4</span>
                   </div>
               </div>
 
@@ -222,14 +123,14 @@ export default function FeaturedProperties() {
                   {/* Price - Large and prominent */}
                   <div className="mb-3">
                     <p className="text-2xl sm:text-3xl font-bold text-blue-600">
-                      {formatPrice(property.price)}
+                      {property.priceDisplay}
                     </p>
                   </div>
 
                   {/* Property Status */}
                   <div className="mb-4">
                     <p className="text-sm text-gray-600 font-medium">
-                      {property.type} View | Vacant | Great ROI
+                      {property.type} | Vacant | Great ROI
                     </p>
                   </div>
 
@@ -267,10 +168,10 @@ export default function FeaturedProperties() {
 
                   {/* Favorite button */}
                   <div className="flex justify-between items-center">
-                    <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
+                    <Link href={`/property/${property.id}/${property.slug}`} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
                   <span>View Details</span>
                   <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                </button>
+                </Link>
                     
                     <button className="ml-3 p-3 text-gray-400 hover:text-red-500 transition-colors duration-200">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
