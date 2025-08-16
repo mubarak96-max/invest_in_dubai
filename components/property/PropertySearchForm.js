@@ -20,8 +20,8 @@ export default function PropertySearchForm({ properties, onSearch }) {
 
   return (
     <form onSubmit={handleSearch} className="bg-white p-6 rounded-lg shadow-lg mb-12">
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
-        <div>
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-4 items-end">
+        <div className="col-span-2 md:col-span-2">
           <label htmlFor="search-term" className="block text-sm font-medium text-gray-700">Keyword or Location</label>
           <input
             type="text"
@@ -32,7 +32,7 @@ export default function PropertySearchForm({ properties, onSearch }) {
             className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
-        <div>
+        <div className="col-span-1 md:col-span-1">
           <label htmlFor="property-type" className="block text-sm font-medium text-gray-700">Property Type</label>
           <select
             id="property-type"
@@ -46,7 +46,7 @@ export default function PropertySearchForm({ properties, onSearch }) {
             ))}
           </select>
         </div>
-        <div>
+        <div className="col-span-1 md:col-span-1">
           <label htmlFor="bedrooms" className="block text-sm font-medium text-gray-700">Bedrooms</label>
           <select
             id="bedrooms"
@@ -60,7 +60,7 @@ export default function PropertySearchForm({ properties, onSearch }) {
             ))}
           </select>
         </div>
-        <div>
+        <div className="col-span-1 md:col-span-1">
           <label htmlFor="min-price" className="block text-sm font-medium text-gray-700">Min Price</label>
           <input
             type="number"
@@ -71,7 +71,7 @@ export default function PropertySearchForm({ properties, onSearch }) {
             className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
-        <div>
+        <div className="col-span-1 md:col-span-1">
           <label htmlFor="max-price" className="block text-sm font-medium text-gray-700">Max Price</label>
           <input
             type="number"
@@ -82,7 +82,7 @@ export default function PropertySearchForm({ properties, onSearch }) {
             className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
-        <button type="submit" className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <button type="submit" className="col-span-2 md:col-span-1 w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
           <Search className="w-5 h-5 mr-2" />
           Search
         </button>
