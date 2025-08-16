@@ -44,12 +44,12 @@ export default function Navbar() {
                >
                  Rent
                </Link>
-               <a
-                 href="#"
-                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
-               >
-                 Projects
-               </a>
+               <Link
+                href="/projects"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Projects
+              </Link>
                <a
                  href="#"
                  className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
@@ -149,12 +149,12 @@ export default function Navbar() {
           >
             Rent
           </Link>
-          <a
-            href="#"
+          <Link
+            href="/projects"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Projects
-          </a>
+          </Link>
           <a
             href="#"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"

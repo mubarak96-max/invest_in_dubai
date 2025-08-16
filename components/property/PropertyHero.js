@@ -128,15 +128,15 @@ export default function PropertyHero({ property }) {
       {/* Property Details Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-8">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-start md:space-x-12">
             <div className="flex-grow mb-6 md:mb-0">
-              <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{property.title}</h1>
+              <h1 className="text-xl lg:text-2xl font-bold text-gray-900 mb-2">{property.title}</h1>
               <div className="flex items-center space-x-2 text-gray-600">
                 <MapPin className="w-5 h-5" />
                 <span>{property.location.building}, {property.location.community}, {property.location.city}</span>
               </div>
             </div>
-            <div className="flex-shrink-0 text-left md:text-right">
+            <div className="flex-shrink-0 text-left">
               <div className="text-4xl lg:text-5xl font-bold text-gray-800 mb-1">
                 {formatPrice(property.price)}
               </div>

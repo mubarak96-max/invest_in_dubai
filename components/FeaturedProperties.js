@@ -144,18 +144,24 @@ export default function FeaturedProperties() {
 
                   {/* Property Features - Horizontal layout */}
                   <div className="flex items-center space-x-6 mb-4 text-gray-600">
-                  <div className="flex items-center">
-                    <Bed className="w-4 h-4 mr-1" />
-                    <span className="text-sm font-medium">{property.beds}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Bath className="w-4 h-4 mr-1" />
-                    <span className="text-sm font-medium">{property.baths}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Square className="w-4 h-4 mr-1" />
+                                    {property.beds && (
+                    <div className="flex items-center">
+                      <Bed className="w-4 h-4 mr-1" />
+                      <span className="text-sm font-medium">{property.beds}</span>
+                    </div>
+                  )}
+                  {property.baths && (
+                    <div className="flex items-center">
+                      <Bath className="w-4 h-4 mr-1" />
+                      <span className="text-sm font-medium">{property.baths}</span>
+                    </div>
+                  )}
+                  {property.sqft && (
+                    <div className="flex items-center">
+                      <Square className="w-4 h-4 mr-1" />
                       <span className="text-sm font-medium">{property.sqft.toLocaleString()} sq ft</span>
-                  </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Handover Date (for off-plan properties) */}
