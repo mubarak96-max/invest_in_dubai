@@ -8,6 +8,7 @@ import PropertyFinancials from '@/components/property/PropertyFinancials';
 import PropertyAgent from '@/components/property/PropertyAgent';
 import SimilarProperties from '@/components/property/SimilarProperties';
 import { getPropertyData } from '@/lib/projectData';
+import { formatNumber } from '@/lib/format';
 
 export default async function PropertyPageWithSlug({ params }) {
   const { id, slug } = await params;
@@ -95,10 +96,8 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const formatAED = (n) => new Intl.NumberFormat('en-AE', { style: 'currency', currency: 'AED', maximumFractionDigits: 0 }).format(n);
-
   return {
-    title: `${property.title} - ${formatAED(property.price)} | Provident Real Estate Dubai`,
+    title: `${property.title} - ${formatNumber(property.price)} AED | Provident Real Estate Dubai`,
     description: `${property.description} Located in ${property.location.community}, ${property.location.city}. ${property.bedrooms} bed, ${property.bathrooms} bath, ${property.area} sqft.`,
     keywords: `Dubai real estate, ${property.location.community}, ${property.type}, ${property.bedrooms} bedroom, property for ${property.priceType}, Dubai property investment`,
     openGraph: {
