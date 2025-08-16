@@ -26,18 +26,24 @@ export default function Navbar() {
                      {/* Desktop Navigation */}
            <div className="hidden md:block">
              <div className="ml-10 flex items-baseline space-x-8">
-               <a
-                 href="#"
+               <Link
+                 href="/buy"
                  className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
                >
                  Buy
-               </a>
-               <a
-                 href="#"
+               </Link>
+               <Link
+                 href="/off-plan"
+                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+               >
+                 Off Plan
+               </Link>
+               <Link
+                 href="/rent"
                  className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
                >
                  Rent
-               </a>
+               </Link>
                <a
                  href="#"
                  className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
@@ -125,18 +131,24 @@ export default function Navbar() {
       {/* Mobile Navigation Menu */}
       <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-50 border-t border-blue-200">
-          <a
-            href="#"
+          <Link
+            href="/buy"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Buy
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/off-plan"
+            className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
+          >
+            Off Plan
+          </Link>
+          <Link
+            href="/rent"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Rent
-          </a>
+          </Link>
           <a
             href="#"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"

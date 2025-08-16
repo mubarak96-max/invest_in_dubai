@@ -140,9 +140,7 @@ export default function PropertyHero({ property }) {
               <div className="text-4xl lg:text-5xl font-bold text-gray-800 mb-1">
                 {formatPrice(property.price)}
               </div>
-              <a href="#" className="text-sm text-orange-600 hover:underline">
-                Calculate your mortgage repayments
-              </a>
+        
             </div>
           </div>
         </div>
