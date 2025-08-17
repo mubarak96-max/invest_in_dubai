@@ -1,25 +1,19 @@
 'use client';
 
 import { Bed, Bath, Square, Calendar, Building, MapPin, Award, Shield } from 'lucide-react';
+import { useMemo } from 'react';
+import { formatPrice, formatNumber } from '@/lib/format';
 
 export default function PropertyOverview({ property }) {
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-AE', {
-      style: 'currency',
-      currency: 'AED',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(price);
-  };
 
-  const keyDetails = [
+  const keyDetails = useMemo(() => [
     { icon: Bed, label: 'Bedrooms', value: property.bedrooms },
     { icon: Bath, label: 'Bathrooms', value: property.bathrooms },
-    { icon: Square, label: 'Area', value: `${property.area.toLocaleString()} sqft` },
+    { icon: Square, label: 'Area', value: `${formatNumber(property.area)} sqft` },
     { icon: Building, label: 'Property Type', value: property.type },
     { icon: Calendar, label: 'Completion', value: property.completionDate },
-    { icon: MapPin, label: 'Community', value: property.location.community }
-  ];
+    { icon: MapPin, label: 'Community', value: property.location?.community || 'N/A' }
+  ], [property.bedrooms, property.bathrooms, property.area, property.type, property.completionDate, property.location?.community]);
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
