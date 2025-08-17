@@ -3,6 +3,7 @@ import { Phone, MessageSquare, MapPin, Bed } from 'lucide-react';
 
 export default function ProjectCard({ project }) {
   const { id, slug, title, developer, image, priceDisplay, handover, address, beds, projectStatus, propertyTypes } = project;
+  const developerName = typeof developer === 'string' ? developer : developer?.name || 'Developer';
 
   return (
     <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group flex flex-col">
@@ -31,7 +32,7 @@ export default function ProjectCard({ project }) {
       <div className="p-4 flex-grow">
         <Link href={`/project/${id}/${slug}`} className="block">
             <h3 className="font-bold text-xl text-gray-900 truncate">{title}</h3>
-            <p className="text-sm text-gray-600 mt-1">by <span className="font-semibold">{developer}</span></p>
+            <p className="text-sm text-gray-600 mt-1">by <span className="font-semibold">{developerName}</span></p>
             <p className="text-lg font-bold text-orange-600 mt-3">{priceDisplay}</p>
         </Link>
         <div className="text-sm text-gray-600 mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
