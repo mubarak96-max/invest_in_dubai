@@ -14,43 +14,43 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-lg transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-                     {/* Logo */}
-           <div className="flex-shrink-0">
+          {/* Logo */}
+          <div className="flex-shrink-0">
             <Link href="/" className="flex items-center space-x-2">
               <span className="text-2xl lg:text-3xl font-bold text-gray-800">
                 Invest in Dubai
               </span>
             </Link>
-           </div>
+          </div>
 
-                     {/* Desktop Navigation */}
-           <div className="hidden md:block">
-             <div className="ml-10 flex items-baseline space-x-8">
-               <Link
-                 href="/buy"
-                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
-               >
-                 Buy
-               </Link>
-               <Link
-                 href="/off-plan"
-                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
-               >
-                 Off Plan
-               </Link>
-               <Link
-                 href="/rent"
-                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
-               >
-                 Rent
-               </Link>
-               <Link
+          {/* Desktop Navigation */}
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-8">
+              <Link
+                href="/buy"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Buy
+              </Link>
+              <Link
+                href="/off-plan"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Off Plan
+              </Link>
+              <Link
+                href="/rent"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Rent
+              </Link>
+              <Link
                 href="/projects"
                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
               >
                 Projects
               </Link>
-               <Link
+              <Link
                 href="/developers"
                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
               >
@@ -62,40 +62,40 @@ export default function Navbar() {
               >
                 Property Map
               </Link>
-               <Link
+              <Link
                 href="/areas"
                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
               >
                 Areas
               </Link>
-               <a
-                 href="#"
-                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
-               >
-                 Services
-               </a>
-               <a
-                 href="#"
-                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
-               >
-                 Blogs
-               </a>
-               <a
+              {/* <a
+                href="#"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Services
+              </a> */}
+              <a
+                href="#"
+                className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
+              >
+                Blogs
+              </a>
+              {/* <a
                  href="#"
                  className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
                >
                  More
-               </a>
-             </div>
-           </div>
+               </a> */}
+            </div>
+          </div>
 
-                     {/* Mobile menu button */}
-           <div className="md:hidden">
-             <button
-               onClick={toggleMenu}
-               className="inline-flex items-center justify-center p-2 rounded-md text-blue-700 hover:text-blue-900 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-300"
-               aria-expanded="false"
-             >
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={toggleMenu}
+              className="inline-flex items-center justify-center p-2 rounded-md text-blue-700 hover:text-blue-900 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-300"
+              aria-expanded="false"
+            >
               <span className="sr-only">Open main menu</span>
               {/* Hamburger icon */}
               <svg

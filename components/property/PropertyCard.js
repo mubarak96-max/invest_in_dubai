@@ -15,14 +15,14 @@ export default function PropertyCard({ property }) {
             </div>
           )}
           {category === 'rent' && (
-              <div className="absolute top-3 left-3 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
-                  For Rent
-              </div>
+            <div className="absolute top-3 left-3 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
+              For Rent
+            </div>
           )}
           {category === 'buy' && (
-              <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
-                  For Sale
-              </div>
+            <div className="absolute top-3 left-3 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
+              For Sale
+            </div>
           )}
         </div>
         <div className="p-4">
@@ -42,7 +42,7 @@ export default function PropertyCard({ property }) {
             </div>
             <div className="flex items-center space-x-1">
               <Square className="w-4 h-4 text-gray-500" />
-              <span>{sqft.toLocaleString()} sqft</span>
+              <span>{sqft ? sqft.toLocaleString() : '0'} sqft</span>
             </div>
           </div>
         </div>

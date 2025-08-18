@@ -36,7 +36,7 @@ export default function SimilarProperties({ currentProperty }) {
               <div className="flex items-center space-x-4 text-gray-600 mb-4">
                 <div className="flex items-center"><Bed className="w-4 h-4 mr-1" />{p.beds}</div>
                 <div className="flex items-center"><Bath className="w-4 h-4 mr-1" />{p.baths}</div>
-                <div className="flex items-center"><Square className="w-4 h-4 mr-1" />{p.sqft.toLocaleString()} sqft</div>
+                <div className="flex items-center"><Square className="w-4 h-4 mr-1" />{p.sqft ? p.sqft.toLocaleString() : '0'} sqft</div>
               </div>
               <Link href={`/property/${p.id}`} className="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors">
                 View Details

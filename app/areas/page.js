@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import AreaCard from '@/components/area/AreaCard';
-import { communities } from '@/lib/propertyData';
+import { communities } from '@/lib/areaData';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function AreasPage() {
@@ -53,7 +53,7 @@ export default function AreasPage() {
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
-          
+
           <button
             onClick={nextSlide}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 p-3 rounded-full shadow-lg border border-blue-200 transition-all duration-200 hover:shadow-xl"
