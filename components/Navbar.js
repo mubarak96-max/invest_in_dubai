@@ -10,6 +10,10 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-lg transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,12 +42,12 @@ export default function Navbar() {
               >
                 Off Plan
               </Link>
-              <Link
+              {/* <Link
                 href="/rent"
                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
               >
                 Rent
-              </Link>
+              </Link> */}
               <Link
                 href="/projects"
                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
@@ -139,58 +143,70 @@ export default function Navbar() {
         <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-50 border-t border-blue-200">
           <Link
             href="/buy"
+            onClick={closeMenu}
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Buy
           </Link>
           <Link
             href="/off-plan"
+            onClick={closeMenu}
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Off Plan
           </Link>
-          <Link
+          {/* <Link
             href="/rent"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Rent
-          </Link>
+          </Link> */}
           <Link
             href="/projects"
+            onClick={closeMenu}
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Projects
           </Link>
           <Link
             href="/developers"
+            onClick={closeMenu}
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Developers
           </Link>
           <Link
+            href="/property-map"
+            onClick={closeMenu}
+            className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
+          >
+            Property Map
+          </Link>
+          <Link
             href="/areas"
+            onClick={closeMenu}
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Areas
           </Link>
-          <a
+          {/* <a
             href="#"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Services
-          </a>
+          </a> */}
           <a
             href="#"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             Blogs
           </a>
-          <a
+          {/* <a
             href="#"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
             More
-          </a>
+          </a> */}
         </div>
       </div>
     </nav>
