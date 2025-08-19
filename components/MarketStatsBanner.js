@@ -1,9 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { TrendingUp, Home, DollarSign, Calendar, ArrowUp, ArrowDown } from 'lucide-react';
+import { TrendingUp, Home, DollarSign, Calendar, ArrowUp, ArrowDown, Building2, Users } from 'lucide-react';
 
-export default function MarketStatsBanner() {
+const iconMap = {
+  'dollar-sign': DollarSign,
+  'trending-up': TrendingUp,
+  'home': Home,
+  'calendar': Calendar,
+  'building': Building2,
+  'users': Users,
+};
+
+export default function MarketStatsBanner({ stats }) {
   const [animatedValues, setAnimatedValues] = useState({
     avgPrice: 0,
     roi: 0,
@@ -11,8 +20,17 @@ export default function MarketStatsBanner() {
     transactions: 0
   });
 
-  // Market statistics data
-  const marketStats = [
+  // Prefer Sanity data if provided; otherwise fallback to defaults
+  const marketStats = (stats && stats.length > 0) ? stats.map((s, idx) => ({
+    id: s.order || idx + 1,
+    icon: iconMap[s.icon] || TrendingUp,
+    label: s.label,
+    value: s.value,
+    unit: s.unit || '',
+    change: s.change,
+    trend: s.trend || 'up',
+    description: s.description || ''
+  })) : [
     {
       id: 1,
       icon: DollarSign,
@@ -66,7 +84,7 @@ export default function MarketStatsBanner() {
       const interval = setInterval(() => {
         currentStep++;
         const progress = currentStep / steps;
-        
+
         setAnimatedValues({
           avgPrice: Math.floor(2.1 * progress * 100) / 100,
           roi: Math.floor(8.2 * progress * 10) / 10,
@@ -146,13 +164,12 @@ export default function MarketStatsBanner() {
                 <div className="w-7 h-7 bg-white/20 rounded-lg flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
                   <stat.icon className="w-3.5 h-3.5 text-white" />
                 </div>
-                
+
                 {/* Trend Indicator */}
-                <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${
-                  stat.trend === 'up' 
-                    ? 'bg-green-500/20 text-green-100' 
-                    : 'bg-red-500/20 text-red-100'
-                }`}>
+                <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${stat.trend === 'up'
+                  ? 'bg-green-500/20 text-green-100'
+                  : 'bg-red-500/20 text-red-100'
+                  }`}>
                   {stat.trend === 'up' ? (
                     <ArrowUp className="w-3 h-3" />
                   ) : (

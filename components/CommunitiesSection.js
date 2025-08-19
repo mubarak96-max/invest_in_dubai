@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import { MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { communities } from '@/lib/propertyData';
+import { communities as fallbackCommunities } from '@/lib/propertyData';
 
-export default function CommunitiesSection() {
+export default function CommunitiesSection({ items }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -24,21 +24,23 @@ export default function CommunitiesSection() {
   // Carousel navigation functions
   const nextSlide = () => {
     const itemsToShow = isDesktop ? 3 : 1;
-    const maxIndex = communities.length - itemsToShow;
+    const maxIndex = data.length - itemsToShow;
     setCurrentIndex(prev => prev >= maxIndex ? 0 : prev + 1);
   };
 
   const prevSlide = () => {
     const itemsToShow = isDesktop ? 3 : 1;
-    const maxIndex = communities.length - itemsToShow;
+    const maxIndex = data.length - itemsToShow;
     setCurrentIndex(prev => prev <= 0 ? maxIndex : prev - 1);
   };
+
+  const data = (items && items.length > 0) ? items : fallbackCommunities;
 
   // Get visible communities based on screen size
   const getVisibleCommunities = () => {
     const itemsToShow = isDesktop ? 3 : 1;
-    const endIndex = Math.min(currentIndex + itemsToShow, communities.length);
-    return communities.slice(currentIndex, endIndex);
+    const endIndex = Math.min(currentIndex + itemsToShow, data.length);
+    return data.slice(currentIndex, endIndex);
   };
 
   return (
@@ -64,7 +66,7 @@ export default function CommunitiesSection() {
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
-          
+
           <button
             onClick={nextSlide}
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 p-3 rounded-full shadow-lg border border-blue-200 transition-all duration-200 hover:shadow-xl"
@@ -87,7 +89,7 @@ export default function CommunitiesSection() {
                     alt={community.name}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  
+
                   {/* Overlay with community name */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                   <div className="absolute bottom-4 left-4 right-4">

@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Bed, Bath, Square, Calendar, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { featuredProperties } from '@/lib/projectData';
+import { featuredProperties as fallbackFeatured } from '@/lib/projectData';
 
-export default function FeaturedProperties() {
+export default function FeaturedProperties({ properties: sanityProperties }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -20,7 +20,7 @@ export default function FeaturedProperties() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  const properties = featuredProperties;
+  const properties = (sanityProperties && sanityProperties.length > 0) ? sanityProperties : fallbackFeatured;
 
   const getCategoryStyle = (category) => {
     const baseStyle = "absolute bottom-4 left-4 px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wide";
@@ -91,7 +91,7 @@ export default function FeaturedProperties() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 px-4">
             {getVisibleProperties().map((property) => (
               <div
-                key={property.id}
+                key={property.id || property._id}
                 className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
               >
                 {/* Property Image */}

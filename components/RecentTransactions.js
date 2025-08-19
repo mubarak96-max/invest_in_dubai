@@ -3,13 +3,22 @@
 import { useState, useEffect } from 'react';
 import { TrendingUp, MapPin, Clock, DollarSign, Home, Users } from 'lucide-react';
 
-export default function RecentTransactions() {
+export default function RecentTransactions({ items }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
-  // Sample transaction data
-  const transactions = [
+  // Prefer Sanity data if provided; otherwise fallback to samples
+  const transactions = (items && items.length > 0) ? items.map((t, idx) => ({
+    id: t._id || idx + 1,
+    type: t.type,
+    property: t.property,
+    location: t.location,
+    price: t.price,
+    timeAgo: t.timeAgo,
+    buyer: t.buyer,
+    status: t.status
+  })) : [
     {
       id: 1,
       type: 'Sold',
@@ -100,7 +109,7 @@ export default function RecentTransactions() {
   // Auto-scroll through transactions (only on client)
   useEffect(() => {
     if (!isClient) return;
-    
+
     const interval = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % transactions.length);
     }, 4000); // Change every 4 seconds
@@ -110,7 +119,7 @@ export default function RecentTransactions() {
 
   const getStatusColor = (type, status) => {
     if (status === 'pending') return 'bg-orange-100 text-orange-800 border-orange-200';
-    
+
     switch (type) {
       case 'Sold':
         return 'bg-green-100 text-green-800 border-green-200';
@@ -143,7 +152,7 @@ export default function RecentTransactions() {
   return (
     <section className="py-6 bg-gradient-to-r from-gray-50 to-blue-50 border-y border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-3">
@@ -155,7 +164,7 @@ export default function RecentTransactions() {
               <p className="text-sm text-gray-600">Recent property transactions</p>
             </div>
           </div>
-          
+
           {/* Live indicator */}
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -166,7 +175,7 @@ export default function RecentTransactions() {
         {/* Transaction Ticker */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6 overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-6 items-center">
-            
+
             {/* Current Transaction */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -234,13 +243,12 @@ export default function RecentTransactions() {
               {transactions.map((_, index) => (
                 <div
                   key={index}
-                  className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                    isClient && index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-colors duration-300 ${isClient && index === currentIndex ? 'bg-blue-600' : 'bg-gray-300'
+                    }`}
                 />
               ))}
             </div>
-            
+
             <button
               onClick={() => setIsVisible(false)}
               className="text-gray-400 hover:text-gray-600 text-sm"

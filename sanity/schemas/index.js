@@ -5,6 +5,7 @@ import project from './project'
 import marketActivity from './marketActivity'
 import marketInsights from './marketInsights'
 import testimonial from './testimonial'
+import recentTransaction from './recentTransaction'
 
 export const schemaTypes = [
   property,
@@ -14,4 +15,5 @@ export const schemaTypes = [
   marketActivity,
   marketInsights,
   testimonial,
+  recentTransaction,
 ]

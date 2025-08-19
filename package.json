@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sanity/block-content-to-react": "^3.0.0",
     "@sanity/client": "^7.8.2",
     "@sanity/code-input": "^6.0.1",
     "@sanity/image-url": "^1.1.0",
@@ -22,7 +23,6 @@
     "react-leaflet": "^5.0.0",
     "react-markdown": "^10.1.0",
     "sanity": "^4.4.1",
-    "sanity-plugin-markdown": "^6.0.0",
     "styled-components": "^6.1.19",
     "tailwindcss-animate": "^1.0.7",
     "yet-another-react-lightbox": "^3.25.0"
