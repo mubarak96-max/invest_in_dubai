@@ -28,8 +28,8 @@ export default {
     {
       name: 'longDescription',
       title: 'Long Description',
-      type: 'text',
-      rows: 8
+      type: 'markdown',
+      description: 'Detailed description in markdown format'
     },
     {
       name: 'images',
@@ -235,6 +235,96 @@ export default {
       title: 'Project Video',
       type: 'url',
       description: 'YouTube or Vimeo URL'
+    },
+    {
+      name: 'nearby',
+      title: 'Nearby Locations',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'name',
+              title: 'Location Name',
+              type: 'string',
+              validation: Rule => Rule.required()
+            },
+            {
+              name: 'type',
+              title: 'Location Type',
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'Landmark', value: 'landmark' },
+                  { title: 'School', value: 'school' },
+                  { title: 'Road Access', value: 'road' },
+                  { title: 'Hospital', value: 'hospital' },
+                  { title: 'Metro', value: 'metro' },
+                  { title: 'Shopping Mall', value: 'shopping' }
+                ]
+              },
+              validation: Rule => Rule.required()
+            },
+            {
+              name: 'distance',
+              title: 'Distance',
+              type: 'string',
+              description: 'e.g., 5 min walk, 10 min drive',
+              validation: Rule => Rule.required()
+            }
+          ],
+          preview: {
+            select: {
+              title: 'name',
+              subtitle: 'type',
+              distance: 'distance'
+            },
+            prepare(selection) {
+              const { title, subtitle, distance } = selection
+              return {
+                title,
+                subtitle: `${subtitle} - ${distance}`
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      name: 'faq',
+      title: 'Frequently Asked Questions',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'question',
+              title: 'Question',
+              type: 'string',
+              validation: Rule => Rule.required()
+            },
+            {
+              name: 'answer',
+              title: 'Answer',
+              type: 'markdown',
+              validation: Rule => Rule.required()
+            }
+          ],
+          preview: {
+            select: {
+              title: 'question'
+            }
+          }
+        }
+      ]
+    },
+    {
+      name: 'brochure',
+      title: 'Project Brochure',
+      type: 'file',
+      description: 'PDF brochure for download'
     }
   ],
   preview: {

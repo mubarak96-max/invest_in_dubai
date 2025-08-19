@@ -28,8 +28,8 @@ export default {
     {
       name: 'longDescription',
       title: 'Long Description',
-      type: 'text',
-      rows: 8
+      type: 'markdown',
+      description: 'Detailed description in markdown format'
     },
     {
       name: 'image',
