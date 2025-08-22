@@ -1,13 +1,45 @@
-'use client';
+import { client } from '@/lib/sanity';
+import ProjectsClient from '@/components/ProjectsClient';
 
-import { usePropertySearch } from '@/hooks/usePropertySearch';
-import { featuredProperties } from '@/lib/projectData';
-import ProjectList from '@/components/project/ProjectList';
-import PropertySearchForm from '@/components/property/PropertySearchForm';
+// Fetch projects from Sanity
+async function getProjects() {
+  try {
+    const projects = await client.fetch(`
+      *[_type == "project"] | order(_createdAt desc) {
+        _id,
+        title,
+        "slug": slug.current,
+        description,
+        "images": images[].asset->url,
+        startingPrice,
+        handover,
+        location,
+        projectStatus,
+        propertyTypes,
+        "developer": developer->{
+          _id,
+          name,
+          "slug": slug.current
+        },
+        floorPlans,
+        amenities,
+        paymentPlan,
+        roi,
+        rentalYield,
+        featured,
+        "totalUnits": totalUnits,
+        "completionDate": handover
+      }
+    `);
+    return projects;
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    return [];
+  }
+}
 
-export default function ProjectsPage() {
-  const initialProjects = featuredProperties.filter(p => p.category === 'off-plan');
-  const { filteredProperties: filteredProjects, handleSearch } = usePropertySearch(initialProjects);
+export default async function ProjectsPage() {
+  const projects = await getProjects();
 
   return (
     <div className="bg-gray-50">
@@ -21,9 +53,7 @@ export default function ProjectsPage() {
           </p>
         </div>
 
-        <PropertySearchForm properties={initialProjects} onSearch={handleSearch} />
-        <ProjectList projects={filteredProjects} />
-
+        <ProjectsClient projects={projects} />
       </div>
     </div>
   );
