@@ -10,14 +10,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* About Section */}
           <div className="space-y-4">
-            <div className="flex items-center">
+            <div className="flex items-center space-x-3 mb-4">
               <Image
-                src="/vercel.svg" // You can replace this with your logo
+                src="/logo.png"
                 alt="Invest in Dubai Logo"
-                width={120}
+                width={40}
                 height={40}
-                className="brightness-0 invert" // Makes dark logo white
+                className="w-10 h-10"
               />
+              <span className="text-xl font-bold text-white">
+                Invest in Dubai
+              </span>
             </div>
             <p className="text-gray-400 mt-4 text-sm leading-relaxed">
               Your trusted partner in Dubai real estate. We help you find the perfect property

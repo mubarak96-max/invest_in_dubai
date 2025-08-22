@@ -9,16 +9,62 @@ import PropertyAgent from '@/components/property/PropertyAgent';
 import SimilarProperties from '@/components/property/SimilarProperties';
 import { getPropertyData } from '@/lib/projectData';
 import { formatNumber } from '@/lib/format';
+import { client } from '@/lib/sanity';
+import { generatePropertySEO, generatePropertyStructuredData } from '@/lib/seo';
+
+// Fetch property from Sanity or fallback to static data
+async function getProperty(id, slug) {
+  try {
+    // Try to fetch from Sanity first
+    const sanityProperty = await client.fetch(`
+      *[_type == "property" && (_id == $id || slug.current == $slug)][0]{
+        _id,
+        title,
+        "slug": slug.current,
+        description,
+        price,
+        category,
+        propertyType,
+        bedrooms,
+        bathrooms,
+        area,
+        location,
+        "images": images[].asset->url,
+        handover,
+        financials,
+        reraPermit,
+        amenities,
+        usp,
+        status,
+        featured
+      }
+    `, { id, slug });
+
+    if (sanityProperty) {
+      return sanityProperty;
+    }
+  } catch (error) {
+    console.error('Error fetching property from Sanity:', error);
+  }
+
+  // Fallback to static data
+  return getPropertyData(id);
+}
 
 export default async function PropertyPageWithSlug({ params }) {
   const { id, slug } = await params;
-  const property = getPropertyData(id);
+  const property = await getProperty(id, slug);
+
   if (!property) notFound();
 
   // Redirect if slug doesn't match the property's canonical slug
-  if (slug !== property.slug) {
-    redirect(`/property/${id}/${property.slug}`);
+  const propertySlug = property.slug || property.slug?.current;
+  if (slug !== propertySlug) {
+    redirect(`/property/${id}/${propertySlug}`);
   }
+
+  // Generate structured data
+  const structuredData = generatePropertyStructuredData(property);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -32,97 +78,64 @@ export default async function PropertyPageWithSlug({ params }) {
             <PropertyLocation property={property} />
             <PropertyInvestmentAnalysis property={property} />
           </div>
-          
+
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             <PropertyFinancials property={property} />
             <PropertyAgent property={property} />
           </div>
         </div>
-        
+
         {/* Similar Properties */}
         <div className="mt-12">
           <SimilarProperties currentProperty={property} />
         </div>
       </div>
 
-      {/* Structured Data for SEO */}
+      {/* Enhanced Structured Data for SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "RealEstateListing",
-            "name": property.title,
-            "description": property.description,
-            "url": `https://provident.ae/property/${property.id}/${property.slug}`,
-            "image": property.images,
-            "offers": {
-              "@type": "Offer",
-              "price": property.price,
-              "priceCurrency": "AED",
-              "availability": "https://schema.org/InStock"
-            },
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": property.location.community,
-              "addressRegion": property.location.city,
-              "addressCountry": "AE"
-            },
-            "floorSize": {
-              "@type": "QuantitativeValue",
-              "value": property.area,
-              "unitCode": "SQM"
-            },
-            "numberOfRooms": property.bedrooms,
-            "numberOfBathroomsTotal": property.bathrooms,
-            "propertyID": property.reraPermit,
-            "datePosted": property.listingDate
-          })
+          __html: JSON.stringify(structuredData)
         }}
       />
     </div>
   );
 }
 
-// Generate metadata for SEO
+// Generate comprehensive metadata for SEO
 export async function generateMetadata({ params }) {
-  const { id } = await params;
-  const property = getPropertyData(id);
-  
+  const { id, slug } = await params;
+  const property = await getProperty(id, slug);
+
   if (!property) {
     return {
-      title: 'Property Not Found',
+      title: 'Property Not Found | Invest In Dubai Real Estate',
+      description: 'The property you are looking for could not be found. Browse our extensive collection of Dubai properties for sale and rent.',
     };
   }
 
-  return {
-    title: `${property.title} - ${formatNumber(property.price)} AED | Provident Real Estate Dubai`,
-    description: `${property.description} Located in ${property.location.community}, ${property.location.city}. ${property.bedrooms} bed, ${property.bathrooms} bath, ${property.area} sqft.`,
-    keywords: `Dubai real estate, ${property.location.community}, ${property.type}, ${property.bedrooms} bedroom, property for ${property.priceType}, Dubai property investment`,
-    openGraph: {
-      title: property.title,
-      description: property.description,
-      images: [
-        {
-          url: property.images[0],
-          width: 1200,
-          height: 800,
-          alt: property.title
-        }
-      ],
-      url: `https://provident.ae/property/${property.id}/${property.slug}`,
-      siteName: 'Provident Real Estate',
-      type: 'website'
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: property.title,
-      description: property.description,
-      images: [property.images[0]]
-    },
-    alternates: {
-      canonical: `https://provident.ae/property/${property.id}/${property.slug}`
-    }
-  };
+  // Generate comprehensive SEO metadata
+  return generatePropertySEO(property);
+}
+
+// Generate static params for better SEO and performance
+export async function generateStaticParams() {
+  try {
+    // Fetch all properties from Sanity
+    const properties = await client.fetch(`
+      *[_type == "property" && defined(slug.current)]{
+        _id,
+        "slug": slug.current
+      }
+    `);
+
+    return properties.map((property) => ({
+      id: property._id,
+      slug: property.slug,
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
 }
