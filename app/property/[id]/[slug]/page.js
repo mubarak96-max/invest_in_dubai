@@ -11,6 +11,7 @@ import { getPropertyData } from '@/lib/projectData';
 import { formatNumber } from '@/lib/format';
 import { client } from '@/lib/sanity';
 import { generatePropertySEO, generatePropertyStructuredData } from '@/lib/seo';
+import { portableTextToPlainText } from '@/components/PortableText';
 
 // Fetch property from Sanity or fallback to static data
 async function getProperty(id, slug) {
@@ -41,6 +42,10 @@ async function getProperty(id, slug) {
     `, { id, slug });
 
     if (sanityProperty) {
+      // Convert block content description to plain text for compatibility
+      if (sanityProperty.description && Array.isArray(sanityProperty.description)) {
+        sanityProperty.descriptionPlainText = portableTextToPlainText(sanityProperty.description);
+      }
       return sanityProperty;
     }
   } catch (error) {

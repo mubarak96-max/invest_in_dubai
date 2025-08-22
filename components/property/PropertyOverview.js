@@ -3,6 +3,7 @@
 import { Bed, Bath, Square, Calendar, Building, MapPin, Award, Shield } from 'lucide-react';
 import { useMemo } from 'react';
 import { formatPrice, formatNumber } from '@/lib/format';
+import PortableText from '@/components/PortableText';
 
 export default function PropertyOverview({ property }) {
 
@@ -19,7 +20,11 @@ export default function PropertyOverview({ property }) {
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Property Overview</h2>
-        <p className="text-gray-600">{property.description}</p>
+        {Array.isArray(property.description) ? (
+          <PortableText value={property.description} compact={true} />
+        ) : (
+          <p className="text-gray-600">{property.description}</p>
+        )}
       </div>
 
       {/* Key Details Grid */}

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Bed, Bath, Square, Calendar, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { featuredProperties as fallbackFeatured } from '@/lib/projectData';
 import { analytics } from '@/lib/analytics';
+import PortableText, { getPortableTextExcerpt } from '@/components/PortableText';
 
 export default function FeaturedProperties({ properties: sanityProperties }) {
   const [currentIndex, setCurrentIndex] = useState(0);
