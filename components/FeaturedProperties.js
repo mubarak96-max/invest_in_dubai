@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Bed, Bath, Square, Calendar, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { featuredProperties as fallbackFeatured } from '@/lib/projectData';
+import { analytics } from '@/lib/analytics';
 
 export default function FeaturedProperties({ properties: sanityProperties }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -174,12 +175,19 @@ export default function FeaturedProperties({ properties: sanityProperties }) {
 
                   {/* Favorite button */}
                   <div className="flex justify-between items-center">
-                    <Link href={`/property/${property.id}/${property.slug}`} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
+                    <Link
+                      href={`/property/${property.id}/${property.slug}`}
+                      onClick={() => analytics.viewProperty(property.id || property._id, property.title)}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn"
+                    >
                       <span>View Details</span>
                       <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
                     </Link>
 
-                    <button className="ml-3 p-3 text-gray-400 hover:text-red-500 transition-colors duration-200">
+                    <button
+                      onClick={() => analytics.favoriteProperty(property.id || property._id, property.title)}
+                      className="ml-3 p-3 text-gray-400 hover:text-red-500 transition-colors duration-200"
+                    >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
@@ -193,7 +201,10 @@ export default function FeaturedProperties({ properties: sanityProperties }) {
 
         {/* View All Properties Button */}
         <div className="text-center mt-12">
-          <button className="bg-white hover:bg-blue-50 text-blue-600 font-semibold py-4 px-8 rounded-lg border-2 border-blue-300 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md">
+          <button
+            onClick={() => analytics.trackEvent('view_all_properties', 'navigation', 'featured_properties_section')}
+            className="bg-white hover:bg-blue-50 text-blue-600 font-semibold py-4 px-8 rounded-lg border-2 border-blue-300 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md"
+          >
             View All Properties
           </button>
         </div>
