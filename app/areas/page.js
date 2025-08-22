@@ -1,8 +1,9 @@
-import { useState } from 'react';
 import AreaCard from '@/components/area/AreaCard';
 import { client } from '@/lib/sanity';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import AreasClient from '@/components/AreasClient';
+
+// Revalidate every hour
+export const revalidate = 3600;
 
 // Fetch areas from Sanity
 async function getAreas() {
