@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
@@ -32,8 +32,8 @@ export const trackEvent = (action, category, label, value) => {
   }
 };
 
-// Google Analytics component
-export default function GoogleAnalytics() {
+// Page tracking component (wrapped in Suspense)
+function PageTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -45,6 +45,11 @@ export default function GoogleAnalytics() {
     trackPageView(url);
   }, [pathname, searchParams]);
 
+  return null;
+}
+
+// Google Analytics component
+export default function GoogleAnalytics() {
   if (!GA_ID) {
     return null;
   }
@@ -68,6 +73,11 @@ export default function GoogleAnalytics() {
           `,
         }}
       />
+
+      {/* Page tracking wrapped in Suspense */}
+      <Suspense fallback={null}>
+        <PageTracker />
+      </Suspense>
     </>
   );
 }
