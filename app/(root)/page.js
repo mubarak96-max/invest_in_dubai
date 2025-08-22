@@ -1,6 +1,7 @@
 import CelebrityTestimonials from '@/components/CelebrityTestimonials'
 import CommunitiesSection from '@/components/CommunitiesSection'
 import FeaturedProperties from '@/components/FeaturedProperties'
+import FeaturedProjects from '@/components/FeaturedProjects'
 import FeaturesSection from '@/components/FeaturesSection'
 import FreeConsultationCTA from '@/components/FreeConsultationCTA'
 import HeroSection from '@/components/Hero'
@@ -11,7 +12,7 @@ import { client, queries } from '@/lib/sanity'
 import React from 'react'
 
 export const revalidate = 60
-const [marketStats, recentTransactions, featuredProps, featuredAreas] = await Promise.all([
+const [marketStats, recentTransactions, featuredProps, featuredAreas, featuredProjects] = await Promise.all([
   client.fetch(queries.allMarketActivity),
   client.fetch(queries.activeRecentTransactions),
   client.fetch(`*[_type=='property' && defined(featured) && featured==true][0...12]{
@@ -37,6 +38,20 @@ const [marketStats, recentTransactions, featuredProps, featuredAreas] = await Pr
       'description': description,
       'avgPrice': averagePrice,
       'properties': propertyCount
+    }`),
+  client.fetch(`*[_type=='project' && defined(featured) && featured==true][0...6]{
+      _id,
+      title,
+      'slug': slug.current,
+      'image': images[0].asset->url,
+      startingPrice,
+      'priceDisplay': select(defined(startingPrice) => 'Starting from AED ' + string(startingPrice), true => 'Contact for Price'),
+      handover,
+      'address': coalesce(location.building + ', ' + location.community, location.community),
+      projectStatus,
+      propertyTypes,
+      'developer': developer->name,
+      'beds': floorPlans[0].bedrooms
     }`)
 ]);
 
@@ -49,6 +64,7 @@ const Home = async () => {
       <RecentTransactions items={recentTransactions} />
       <MarketStatsBanner stats={marketStats} />
       <FeaturedProperties properties={featuredProps} />
+      <FeaturedProjects projects={featuredProjects} />
       <InvestmentCalculator />
       <CommunitiesSection items={featuredAreas} />
       <CelebrityTestimonials />

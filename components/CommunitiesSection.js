@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { communities as fallbackCommunities } from '@/lib/propertyData';
+import { analytics } from '@/lib/analytics';
 
 export default function CommunitiesSection({ items }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -79,15 +81,16 @@ export default function CommunitiesSection({ items }) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 px-4">
             {getVisibleCommunities().map((community) => (
               <div
-                key={community.id}
+                key={community.id || community._id}
                 className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
               >
                 {/* Community Image */}
                 <div className="relative h-48 sm:h-56 overflow-hidden">
-                  <img
-                    src={community.image}
+                  <Image
+                    src={community.image || '/default-community.jpg'}
                     alt={community.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
 
                   {/* Overlay with community name */}
@@ -98,7 +101,7 @@ export default function CommunitiesSection({ items }) {
                     </h3>
                     <div className="flex items-center text-white/90 text-sm">
                       <MapPin className="w-4 h-4 mr-1" />
-                      <span>{community.properties}</span>
+                      <span>{community.properties || community.propertyCount || 0} properties</span>
                     </div>
                   </div>
                 </div>
@@ -113,15 +116,24 @@ export default function CommunitiesSection({ items }) {
                   {/* Stats */}
                   <div className="flex items-center justify-between mb-6">
                     <div className="text-sm text-gray-500">
-                      <span className="font-medium text-blue-600">{community.avgPrice}</span> avg. price
+                      <span className="font-medium text-blue-600">
+                        {community.avgPrice || community.averagePrice ?
+                          `AED ${(community.avgPrice || community.averagePrice).toLocaleString()}` :
+                          'Contact for Price'
+                        }
+                      </span> avg. price
                     </div>
                     <div className="text-sm text-gray-500">
-                      {community.properties}
+                      {community.properties || community.propertyCount || 0} properties
                     </div>
                   </div>
 
                   {/* Learn More Button */}
-                  <Link href={`/areas/${community.slug}`} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
+                  <Link
+                    href={`/areas/${community.slug}`}
+                    onClick={() => analytics.viewArea(community.name)}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn"
+                  >
                     <span>Learn More</span>
                     <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
                   </Link>
