@@ -46,6 +46,15 @@ export default async function sitemap() {
       }
     `);
 
+    // Fetch all SEO pages
+    const seoPages = await client.fetch(`
+      *[_type == "seoPage" && defined(slug.current) && isActive == true]{
+        "slug": slug.current,
+        _updatedAt,
+        priority
+      }
+    `);
+
     // Static pages
     const staticPages = [
       {
@@ -138,6 +147,14 @@ export default async function sitemap() {
       priority: 0.5,
     }));
 
+    // SEO pages
+    const seoPageUrls = seoPages.map((seoPage) => ({
+      url: `${SITE_URL}/${seoPage.slug}`,
+      lastModified: new Date(seoPage._updatedAt),
+      changeFrequency: 'weekly',
+      priority: seoPage.priority || 0.8,
+    }));
+
     return [
       ...staticPages,
       ...propertyPages,
@@ -145,10 +162,11 @@ export default async function sitemap() {
       ...developerPages,
       ...projectPages,
       ...insightPages,
+      ...seoPageUrls,
     ];
   } catch (error) {
     console.error('Error generating sitemap:', error);
-    
+
     // Return basic sitemap if there's an error
     return [
       {

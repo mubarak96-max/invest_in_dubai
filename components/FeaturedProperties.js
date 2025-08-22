@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Bed, Bath, Square, Calendar, MapPin, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { formatPrice } from '@/lib/format';
 import { featuredProperties as fallbackFeatured } from '@/lib/projectData';
 import { analytics } from '@/lib/analytics';
 import PortableText, { getPortableTextExcerpt } from '@/components/PortableText';
@@ -122,10 +123,10 @@ export default function FeaturedProperties({ properties: sanityProperties }) {
 
                 {/* Property Details */}
                 <div className="p-6">
-                  {/* Price - Large and prominent */}
+                  {/* Price - Reduced size and better formatting */}
                   <div className="mb-3">
-                    <p className="text-2xl sm:text-3xl font-bold text-blue-600">
-                      {property.priceDisplay}
+                    <p className="text-xl sm:text-2xl font-bold text-blue-600">
+                      {property.price ? formatPrice(property.price) : (property.priceDisplay || 'Contact for Price')}
                     </p>
                   </div>
 
@@ -202,12 +203,13 @@ export default function FeaturedProperties({ properties: sanityProperties }) {
 
         {/* View All Properties Button */}
         <div className="text-center mt-12">
-          <button
+          <Link
+            href="/buy"
             onClick={() => analytics.trackEvent('view_all_properties', 'navigation', 'featured_properties_section')}
-            className="bg-white hover:bg-blue-50 text-blue-600 font-semibold py-4 px-8 rounded-lg border-2 border-blue-300 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md"
+            className="inline-block bg-white hover:bg-blue-50 text-blue-600 font-semibold py-4 px-8 rounded-lg border-2 border-blue-300 hover:border-blue-400 transition-all duration-200 shadow-sm hover:shadow-md"
           >
             View All Properties
-          </button>
+          </Link>
         </div>
       </div>
     </section>

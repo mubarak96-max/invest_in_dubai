@@ -21,18 +21,15 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center">
               <Image
                 src="/logo.png"
-                alt="Invest in Dubai Logo"
-                width={40}
+                alt="Company Logo"
+                width={120}
                 height={40}
-                className="w-8 h-8 lg:w-10 lg:h-10"
+                className="w-24 h-8 lg:w-30 lg:h-10"
                 priority
               />
-              <span className="text-xl lg:text-2xl font-bold text-gray-800">
-                Invest in Dubai
-              </span>
             </Link>
           </div>
 

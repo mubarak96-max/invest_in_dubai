@@ -19,15 +19,15 @@ const [marketStats, recentTransactions, featuredProps, featuredAreas] = await Pr
       title,
       'slug': slug.current,
       'image': images[0].asset->url,
-      'price': price,
-      'priceDisplay': select(defined(price) => 'AED ' + string(price), true => 'Contact for price'),
+      price,
       'category': category,
       'type': propertyType,
       'beds': bedrooms,
       'baths': bathrooms,
       'sqft': area,
       'address': coalesce(location.building + ', ' + location.community, location.community),
-      'handover': handover
+      'handover': handover,
+      description
     }`),
   client.fetch(`*[_type=='area' && defined(featured) && featured==true][0...9]{
       _id,
