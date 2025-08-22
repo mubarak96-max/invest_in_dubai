@@ -2,6 +2,7 @@
 
 import { MapPin, Clock, Car, Plane, ShoppingBag, GraduationCap, Heart, Waves } from 'lucide-react';
 import { formatNumber } from '@/lib/format';
+import PortableText from '@/components/PortableText';
 
 export default function AreaOverview({ description, location, averagePrice, averageRentalYield, areaData }) {
   // Use areaData if passed, otherwise use individual props for backward compatibility
@@ -22,14 +23,20 @@ export default function AreaOverview({ description, location, averagePrice, aver
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8">
       <div className="grid lg:grid-cols-3 gap-8">
-        
+
         {/* Main Description */}
         <div className="lg:col-span-2 space-y-6">
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">About the Area</h2>
-            <p className="text-gray-600 leading-relaxed text-lg">
-              {data.longDescription || data.description}
-            </p>
+            <div className="text-gray-600 leading-relaxed text-lg">
+              {data.longDescription && Array.isArray(data.longDescription) ? (
+                <PortableText value={data.longDescription} />
+              ) : data.description ? (
+                <p>{data.description}</p>
+              ) : (
+                <p>No description available.</p>
+              )}
+            </div>
           </div>
 
           {/* Amenities */}
@@ -73,7 +80,7 @@ export default function AreaOverview({ description, location, averagePrice, aver
 
         {/* Stats Sidebar */}
         <div className="space-y-6">
-          
+
           {/* Market Stats */}
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Market Overview</h3>
@@ -137,11 +144,10 @@ export default function AreaOverview({ description, location, averagePrice, aver
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600">Demand Level</span>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    data.marketTrends.demandLevel === 'High' 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-yellow-100 text-yellow-800'
-                  }`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${data.marketTrends.demandLevel === 'High'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-yellow-100 text-yellow-800'
+                    }`}>
                     {data.marketTrends.demandLevel}
                   </span>
                 </div>
