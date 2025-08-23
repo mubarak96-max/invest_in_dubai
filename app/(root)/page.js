@@ -12,7 +12,8 @@ import { client, queries } from '@/lib/sanity'
 import React from 'react'
 
 export const revalidate = 60
-const [marketStats, recentTransactions, featuredProps, featuredAreas, featuredProjects] = await Promise.all([
+console.log('Fetching homepage data...');
+const [marketStats, recentTransactions, featuredProps, areas, featuredProjects] = await Promise.all([
   client.fetch(queries.allMarketActivity),
   client.fetch(queries.activeRecentTransactions),
   client.fetch(`*[_type=='property' && defined(featured) && featured==true][0...12]{
@@ -30,7 +31,7 @@ const [marketStats, recentTransactions, featuredProps, featuredAreas, featuredPr
       'handover': handover,
       description
     }`),
-  client.fetch(`*[_type=='area' && defined(featured) && featured==true][0...9]{
+  client.fetch(`*[_type=='area'][0...5]{
       _id,
       name,
       'slug': slug.current,
@@ -55,6 +56,9 @@ const [marketStats, recentTransactions, featuredProps, featuredAreas, featuredPr
     }`)
 ]);
 
+console.log('Areas count:', areas?.length || 0);
+console.log('Featured projects count:', featuredProjects?.length || 0);
+
 
 const Home = async () => {
   return (
@@ -66,7 +70,7 @@ const Home = async () => {
       <FeaturedProperties properties={featuredProps} />
       <FeaturedProjects projects={featuredProjects} />
       <InvestmentCalculator />
-      <CommunitiesSection items={featuredAreas} />
+      <CommunitiesSection items={areas} />
       <CelebrityTestimonials />
       <FreeConsultationCTA />
     </div>

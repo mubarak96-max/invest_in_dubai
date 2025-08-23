@@ -38,6 +38,9 @@ export default function CommunitiesSection({ items }) {
 
   const data = (items && items.length > 0) ? items : fallbackCommunities;
 
+  // Debug: Log the data source
+  console.log('CommunitiesSection data source:', items && items.length > 0 ? 'Sanity' : 'Fallback', 'Items count:', data.length);
+
   // Get visible communities based on screen size
   const getVisibleCommunities = () => {
     const itemsToShow = isDesktop ? 3 : 1;
@@ -79,67 +82,70 @@ export default function CommunitiesSection({ items }) {
 
           {/* Communities Container */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 px-4">
-            {getVisibleCommunities().map((community) => (
-              <div
-                key={community.id || community._id}
-                className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
-              >
-                {/* Community Image */}
-                <div className="relative h-48 sm:h-56 overflow-hidden">
-                  <Image
-                    src={community.image || '/default-community.jpg'}
-                    alt={community.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
+            {getVisibleCommunities().map((community) => {
+              const communitySlug = community.slug?.current || community.slug;
+              return (
+                <div
+                  key={community.id || community._id}
+                  className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
+                >
+                  {/* Community Image */}
+                  <div className="relative h-48 sm:h-56 overflow-hidden">
+                    <Image
+                      src={community.image || '/default-community.jpg'}
+                      alt={community.name}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
 
-                  {/* Overlay with community name */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-xl font-bold text-white mb-1">
-                      {community.name}
-                    </h3>
-                    <div className="flex items-center text-white/90 text-sm">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      <span>{community.properties || community.propertyCount || 0} properties</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Community Details */}
-                <div className="p-6">
-                  {/* Description */}
-                  <p className="text-gray-600 leading-relaxed mb-4">
-                    {community.description}
-                  </p>
-
-                  {/* Stats */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="text-sm text-gray-500">
-                      <span className="font-medium text-blue-600">
-                        {community.avgPrice || community.averagePrice ?
-                          `AED ${(community.avgPrice || community.averagePrice).toLocaleString()}` :
-                          'Contact for Price'
-                        }
-                      </span> avg. price
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {community.properties || community.propertyCount || 0} properties
+                    {/* Overlay with community name */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="text-xl font-bold text-white mb-1">
+                        {community.name}
+                      </h3>
+                      <div className="flex items-center text-white/90 text-sm">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        <span>{community.properties || community.propertyCount || 0} properties</span>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Learn More Button */}
-                  <Link
-                    href={`/areas/${community.slug}`}
-                    onClick={() => analytics.viewArea(community.name)}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn"
-                  >
-                    <span>Learn More</span>
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                  </Link>
+                  {/* Community Details */}
+                  <div className="p-6">
+                    {/* Description */}
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      {community.description}
+                    </p>
+
+                    {/* Stats */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="text-sm text-gray-500">
+                        <span className="font-medium text-blue-600">
+                          {community.avgPrice || community.averagePrice ?
+                            `AED ${(community.avgPrice || community.averagePrice).toLocaleString()}` :
+                            'Contact for Price'
+                          }
+                        </span> avg. price
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {community.properties || community.propertyCount || 0} properties
+                      </div>
+                    </div>
+
+                    {/* Learn More Button */}
+                    <Link
+                      href={`/areas/${communitySlug}`}
+                      onClick={() => analytics.viewArea(community.name)}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn"
+                    >
+                      <span>Learn More</span>
+                      <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

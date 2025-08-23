@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { MapPin, ArrowRight } from 'lucide-react';
 
 export default function AreaCard({ area }) {
+  // Handle both Sanity and dummy data slug formats
+  const areaSlug = area.slug?.current || area.slug;
+
   return (
     <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
       {/* Community Image */}
@@ -14,7 +17,7 @@ export default function AreaCard({ area }) {
           objectFit="cover"
           className="transition-transform duration-300 group-hover:scale-105"
         />
-        
+
         {/* Overlay with community name */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
         <div className="absolute bottom-4 left-4 right-4">
@@ -46,7 +49,7 @@ export default function AreaCard({ area }) {
         </div>
 
         {/* Learn More Button */}
-        <Link href={`/areas/${area.slug}`} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
+        <Link href={`/areas/${areaSlug}`} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center group/btn">
           <span>Learn More</span>
           <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1" />
         </Link>
