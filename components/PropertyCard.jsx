@@ -30,7 +30,7 @@ export default function PropertyCard({ property, viewMode = 'grid' }) {
       <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
         <div className="flex flex-col md:flex-row">
           {/* Image */}
-          <div className="md:w-80 h-48 md:h-auto relative">
+          <div className="md:w-1/3 lg:w-80 h-48 md:h-auto relative shrink-0">
             <Link href={propertyUrl} onClick={() => analytics.viewProperty(_id, title)}>
               <Image
                 src={primaryImage}
