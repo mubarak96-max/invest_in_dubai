@@ -7,6 +7,9 @@ import marketInsights from './marketInsights'
 import testimonial from './testimonial'
 import recentTransaction from './recentTransaction'
 import seoPage from './seoPage'
+import blog from './blog'
+import blogCategory from './blogCategory'
+import author from './author'
 
 export const schema = {
   types: [
@@ -19,5 +22,8 @@ export const schema = {
     testimonial,
     recentTransaction,
     seoPage,
+    blog,
+    blogCategory,
+    author,
   ],
 }

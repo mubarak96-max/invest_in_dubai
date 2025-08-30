@@ -84,12 +84,12 @@ export default function Navbar() {
               >
                 Services
               </a> */}
-              <a
-                href="#"
+              <Link
+                href="/blog"
                 className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
               >
-                Blogs
-              </a>
+                Blog
+              </Link>
               {/* <a
                  href="#"
                  className="px-3 py-2 text-sm lg:text-base font-medium text-blue-700 hover:text-blue-900 transition-colors duration-300"
@@ -201,12 +201,13 @@ export default function Navbar() {
           >
             Services
           </a> */}
-          <a
-            href="#"
+          <Link
+            href="/blog"
+            onClick={closeMenu}
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
           >
-            Blogs
-          </a>
+            Blog
+          </Link>
           {/* <a
             href="#"
             className="text-blue-700 hover:text-blue-900 hover:bg-blue-50 block px-3 py-2 text-base font-medium transition-colors duration-200"
