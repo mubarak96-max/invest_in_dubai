@@ -4,7 +4,16 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { MapPin, Tag, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function ProjectHero({ project, onRegisterInterest }) {
+export default function ProjectHero({ project, onRegisterInterest, onDownloadBrochure }) {
+  // Early return if no project data
+  if (!project) {
+    return (
+      <div className="relative w-full h-[70vh] md:h-[85vh] bg-gray-200 flex items-center justify-center">
+        <span className="text-gray-500 text-lg">Project not available</span>
+      </div>
+    );
+  }
+
   const {
     title,
     developer,
@@ -20,13 +29,35 @@ export default function ProjectHero({ project, onRegisterInterest }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Ensure we have images array
-  const projectImages = images && images.length > 0 ? images : ['/default-project.jpg'];
+  // Ensure we have valid images array and never pass empty strings to next/image
+  let projectImages = [];
+
+  try {
+    if (Array.isArray(images)) {
+      projectImages = images
+        .filter(Boolean)  // Remove null/undefined
+        .filter(img => typeof img === 'string')  // Ensure strings only
+        .map(img => img.trim())  // Trim whitespace
+        .filter(img => img !== '')  // Remove empty strings
+    }
+  } catch (error) {
+    console.error('Error processing project hero images:', error);
+  }
+
+  // Always ensure we have at least one valid image
+  if (projectImages.length === 0) {
+    projectImages.push('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  }
+
+  console.log('ProjectHero images:', projectImages);
+  console.log('Current image index:', currentIndex);
 
   // Get display values with fallbacks
   const displayAddress = address || location?.community || location?.building || 'Dubai';
   const displayPrice = priceDisplay || (startingPrice ? `Starting from AED ${startingPrice.toLocaleString()}` : 'Contact for Price');
   const developerName = developer?.name || 'Developer';
+
+  const safeIndex = currentIndex % projectImages.length;
 
   const handlePrev = (e) => {
     e.stopPropagation();
@@ -41,13 +72,19 @@ export default function ProjectHero({ project, onRegisterInterest }) {
   return (
     <div className="relative w-full h-[70vh] md:h-[85vh] text-white shadow-lg rounded-b-2xl overflow-hidden">
       {/* Background Image */}
-      <Image
-        src={projectImages[currentIndex]}
-        alt={title || 'Project'}
-        fill
-        className="object-cover transition-all duration-500 ease-in-out transform scale-100"
-        priority
-      />
+      {projectImages[safeIndex] ? (
+        <Image
+          src={projectImages[safeIndex]}
+          alt={title || 'Project'}
+          fill
+          className="object-cover transition-all duration-500 ease-in-out transform scale-100"
+          priority
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+          <span className="text-gray-500 text-lg">No image available</span>
+        </div>
+      )}
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
@@ -70,8 +107,8 @@ export default function ProjectHero({ project, onRegisterInterest }) {
           </div>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <button onClick={onRegisterInterest} className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">Register Interest</button>
-            <button className="bg-black/60 backdrop-blur-md text-white font-bold py-3 px-8 rounded-lg hover:bg-black/80 transition-all transform hover:scale-105 shadow-lg">Download Brochure</button>
+            <button type="button" onClick={onRegisterInterest} className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">Register Interest</button>
+            <button type="button" onClick={onDownloadBrochure || onRegisterInterest} className="bg-black/60 backdrop-blur-md text-white font-bold py-3 px-8 rounded-lg hover:bg-black/80 transition-all transform hover:scale-105 shadow-lg">Download Brochure</button>
           </div>
         </div>
       </div>
@@ -89,7 +126,7 @@ export default function ProjectHero({ project, onRegisterInterest }) {
             {projectImages.map((_, index) => (
               <div
                 key={index}
-                className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? 'bg-white scale-125' : 'bg-white/50'}`}
+                className={`w-2 h-2 rounded-full transition-all ${index === currentIndex % projectImages.length ? 'bg-white scale-125' : 'bg-white/50'}`}
               />
             ))}
           </div>

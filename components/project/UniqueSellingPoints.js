@@ -13,13 +13,19 @@ export default function UniqueSellingPoints({ points, onFindOutMore }) {
         {points.map((point, index) => (
           <div key={index} className="group overflow-hidden rounded-lg shadow-md">
             <div className="relative h-56">
-              <Image 
-                src={point.image}
-                alt={point.title}
-                layout="fill"
-                objectFit="cover"
-                className="transition-transform duration-300 group-hover:scale-105"
-              />
+              {point.image && point.image.trim() !== '' ? (
+                <Image 
+                  src={point.image}
+                  alt={point.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="transition-transform duration-300 group-hover:scale-105"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-500">No image available</span>
+                </div>
+              )}
             </div>
             <div className="p-6">
               <h3 className="text-xl font-bold text-gray-800 mb-2">{point.title}</h3>

@@ -8,23 +8,35 @@ export default function DeveloperCard({ developer }) {
   return (
     <div className="group bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-xl">
       <div className="relative h-56 block">
-        <Image
-          src={image}
-          alt={`${name} projects`}
-          layout="fill"
-          objectFit="cover"
-          className="transition-transform duration-300 group-hover:scale-105"
-        />
+        {image && image.trim() !== '' ? (
+          <Image
+            src={image}
+            alt={`${name} projects`}
+            layout="fill"
+            objectFit="cover"
+            className="transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-500">No image available</span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
         <div className="absolute inset-0 flex items-center justify-center p-4">
           <div className="relative w-40 h-20">
-            <Image
-              src={logo}
-              alt={`${name} logo`}
-              layout="fill"
-              objectFit="contain"
-              className="filter brightness-0 invert drop-shadow-lg"
-            />
+            {logo && logo.trim() !== '' ? (
+              <Image
+                src={logo}
+                alt={`${name} logo`}
+                layout="fill"
+                objectFit="contain"
+                className="filter brightness-0 invert drop-shadow-lg"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-600 flex items-center justify-center">
+                <span className="text-white text-lg font-semibold">{name}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

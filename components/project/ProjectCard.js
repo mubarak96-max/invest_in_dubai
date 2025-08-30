@@ -37,12 +37,18 @@ export default function ProjectCard({ project, viewMode = 'grid' }) {
         <div className="flex flex-col md:flex-row">
           {/* Image */}
           <div className="md:w-80 h-48 md:h-auto relative">
-            <Image
-              src={projectImage}
-              alt={title}
-              fill
-              className="object-cover"
-            />
+            {projectImage && projectImage.trim() !== '' ? (
+              <Image
+                src={projectImage}
+                alt={title}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                <span className="text-gray-500">No image available</span>
+              </div>
+            )}
             <div className="absolute top-3 left-3">
               {projectStatus && (
                 <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">
@@ -113,13 +119,19 @@ export default function ProjectCard({ project, viewMode = 'grid' }) {
     <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group flex flex-col">
       <div className="relative overflow-hidden">
         <Link href={`/project/${projectId}/${projectSlug}`} className="block">
-          <Image
-            src={projectImage}
-            alt={title}
-            width={400}
-            height={224}
-            className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
-          />
+          {projectImage && projectImage.trim() !== '' ? (
+            <Image
+              src={projectImage}
+              alt={title}
+              width={400}
+              height={224}
+              className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+          ) : (
+            <div className="w-full h-56 bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500">No image available</span>
+            </div>
+          )}
         </Link>
         <div className="absolute top-4 left-4 flex items-center gap-x-2">
           {projectStatus && (

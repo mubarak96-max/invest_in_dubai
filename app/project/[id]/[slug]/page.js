@@ -21,6 +21,7 @@ async function getProjectData(id) {
         location,
         projectStatus,
         propertyTypes,
+        "brochureUrl": brochure.asset->url,
         "developer": developer->{
           _id,
           name,
@@ -33,7 +34,11 @@ async function getProjectData(id) {
           phone,
           email
         },
-        floorPlans,
+        floorPlans[] {
+          type,
+          size,
+          "image": image.asset->url
+        },
         amenities,
         paymentPlan,
         roi,
@@ -42,7 +47,13 @@ async function getProjectData(id) {
         totalUnits,
         usp,
         video,
-        brochure,
+        brochure {
+          asset-> {
+            url,
+            originalFilename,
+            _id
+          }
+        },
         seoTitle,
         seoDescription
       }
@@ -86,15 +97,15 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const developerName = project.developer?.name || 'Developer';
+  const developerName = project?.developer?.name || 'Developer';
 
   return {
-    title: project.seoTitle || `${project.title} by ${developerName} | Invest In Dubai Real Estate`,
-    description: project.seoDescription || project.description?.substring(0, 160) || `Discover ${project.title}, an exclusive development by ${developerName} in Dubai.`,
+    title: project?.seoTitle || `${project?.title} by ${developerName} | Invest In Dubai Real Estate`,
+    description: project?.seoDescription || project?.description?.substring(0, 160) || `Discover ${project?.title}, an exclusive development by ${developerName} in Dubai.`,
     openGraph: {
-      title: project.seoTitle || `${project.title} by ${developerName}`,
-      description: project.seoDescription || project.description,
-      images: project.images?.length > 0 ? [{ url: project.images[0] }] : [],
+      title: project?.seoTitle || `${project?.title} by ${developerName}`,
+      description: project?.seoDescription || project?.description,
+      images: project?.images?.length > 0 ? [{ url: project.images[0] }] : [],
     }
   };
 }
@@ -108,9 +119,9 @@ export default async function ProjectPage({ params }) {
   }
 
   // Redirect if slug doesn't match the project's canonical slug
-  const projectSlug = project.slug?.current || project.slug;
+  const projectSlug = project?.slug?.current || project?.slug;
   if (slug !== projectSlug) {
-    redirect(`/project/${project._id}/${projectSlug}`);
+    redirect(`/project/${project?._id}/${projectSlug}`);
   }
 
   return <ProjectPageClient project={project} />;

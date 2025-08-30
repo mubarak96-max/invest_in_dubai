@@ -17,10 +17,10 @@ export default function ProjectLocation({ location, nearbyPlaces }) {
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Location & Nearby</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Map */}
-        <div className="h-80 md:h-full rounded-lg overflow-hidden">
-          <DynamicMap center={location.coordinates} />
+        <div className="h-96 md:h-[500px] rounded-lg overflow-hidden">
+          <DynamicMap center={location.coordinates} zoom={11} popupText="Project Location" />
         </div>
-        
+
         {/* Nearby Places */}
         <div>
           <h3 className="text-xl font-semibold text-gray-800 mb-4">What's Nearby?</h3>

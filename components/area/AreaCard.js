@@ -10,13 +10,19 @@ export default function AreaCard({ area }) {
     <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100">
       {/* Community Image */}
       <div className="relative h-48 sm:h-56 overflow-hidden">
-        <Image
-          src={area.image}
-          alt={area.name}
-          layout="fill"
-          objectFit="cover"
-          className="transition-transform duration-300 group-hover:scale-105"
-        />
+        {area.image && area.image.trim() !== '' ? (
+          <Image
+            src={area.image}
+            alt={area.name}
+            layout="fill"
+            objectFit="cover"
+            className="transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-500">No image available</span>
+          </div>
+        )}
 
         {/* Overlay with community name */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>

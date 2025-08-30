@@ -31,18 +31,20 @@ export default function PropertyCard({ property, viewMode = 'grid' }) {
         <div className="flex flex-col md:flex-row">
           {/* Image */}
           <div className="md:w-80 h-48 md:h-auto relative">
-            <Image
-              src={primaryImage}
-              alt={title}
-              fill
-              className="object-cover"
-            />
+            <Link href={propertyUrl} onClick={() => analytics.viewProperty(_id, title)}>
+              <Image
+                src={primaryImage}
+                alt={title}
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
+              />
+            </Link>
             <div className="absolute top-3 left-3">
               <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">
                 {category === 'buy' ? 'For Sale' : category === 'rent' ? 'For Rent' : 'Off-Plan'}
               </span>
             </div>
-            <button 
+            <button
               onClick={() => analytics.favoriteProperty(_id, title)}
               className="absolute top-3 right-3 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
             >
@@ -108,13 +110,13 @@ export default function PropertyCard({ property, viewMode = 'grid' }) {
               >
                 View Details
               </Link>
-              <button 
+              <button
                 onClick={() => analytics.callAgent(_id)}
                 className="p-2 text-gray-600 hover:text-blue-600 transition-colors"
               >
                 <Phone className="w-5 h-5" />
               </button>
-              <button 
+              <button
                 onClick={() => analytics.whatsappContact(_id)}
                 className="p-2 text-gray-600 hover:text-green-600 transition-colors"
               >
@@ -132,18 +134,20 @@ export default function PropertyCard({ property, viewMode = 'grid' }) {
     <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
-        <Image
-          src={primaryImage}
-          alt={title}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+        <Link href={propertyUrl} onClick={() => analytics.viewProperty(_id, title)}>
+          <Image
+            src={primaryImage}
+            alt={title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+          />
+        </Link>
         <div className="absolute top-3 left-3">
           <span className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">
             {category === 'buy' ? 'For Sale' : category === 'rent' ? 'For Rent' : 'Off-Plan'}
           </span>
         </div>
-        <button 
+        <button
           onClick={() => analytics.favoriteProperty(_id, title)}
           className="absolute top-3 right-3 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
         >
@@ -210,13 +214,13 @@ export default function PropertyCard({ property, viewMode = 'grid' }) {
           >
             View Details
           </Link>
-          <button 
+          <button
             onClick={() => analytics.callAgent(_id)}
             className="p-2 text-gray-600 hover:text-blue-600 transition-colors"
           >
             <Phone className="w-4 h-4" />
           </button>
-          <button 
+          <button
             onClick={() => analytics.whatsappContact(_id)}
             className="p-2 text-gray-600 hover:text-green-600 transition-colors"
           >

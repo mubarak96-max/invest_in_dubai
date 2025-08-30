@@ -10,9 +10,11 @@ import { analytics } from '@/lib/analytics';
 export default function CommunitiesSection({ items }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Handle responsive behavior
   useEffect(() => {
+    setIsMounted(true);
     const checkScreenSize = () => {
       setIsDesktop(window.innerWidth >= 1024);
     };
@@ -25,13 +27,13 @@ export default function CommunitiesSection({ items }) {
 
   // Carousel navigation functions
   const nextSlide = () => {
-    const itemsToShow = isDesktop ? 3 : 1;
+    const itemsToShow = isMounted && isDesktop ? 3 : 1;
     const maxIndex = data.length - itemsToShow;
     setCurrentIndex(prev => prev >= maxIndex ? 0 : prev + 1);
   };
 
   const prevSlide = () => {
-    const itemsToShow = isDesktop ? 3 : 1;
+    const itemsToShow = isMounted && isDesktop ? 3 : 1;
     const maxIndex = data.length - itemsToShow;
     setCurrentIndex(prev => prev <= 0 ? maxIndex : prev - 1);
   };
@@ -43,7 +45,8 @@ export default function CommunitiesSection({ items }) {
 
   // Get visible communities based on screen size
   const getVisibleCommunities = () => {
-    const itemsToShow = isDesktop ? 3 : 1;
+    // During SSR, always show 1 item to prevent hydration mismatch
+    const itemsToShow = isMounted && isDesktop ? 3 : 1;
     const endIndex = Math.min(currentIndex + itemsToShow, data.length);
     return data.slice(currentIndex, endIndex);
   };
@@ -105,8 +108,8 @@ export default function CommunitiesSection({ items }) {
                         {community.name}
                       </h3>
                       <div className="flex items-center text-white/90 text-sm">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        <span>{community.properties || community.propertyCount || 0} properties</span>
+                        {/* <MapPin className="w-4 h-4 mr-1" /> */}
+                        {/* <span>{community.properties || community.propertyCount || 0} properties</span> */}
                       </div>
                     </div>
                   </div>
@@ -128,9 +131,9 @@ export default function CommunitiesSection({ items }) {
                           }
                         </span> avg. price
                       </div>
-                      <div className="text-sm text-gray-500">
+                      {/* <div className="text-sm text-gray-500">
                         {community.properties || community.propertyCount || 0} properties
-                      </div>
+                      </div> */}
                     </div>
 
                     {/* Learn More Button */}

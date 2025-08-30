@@ -22,11 +22,10 @@ export default function FloorPlans({ plans }) {
           <button
             key={index}
             onClick={() => setActiveTab(index)}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === index
-                ? 'border-b-2 border-blue-600 text-blue-600'
-                : 'text-gray-500 hover:text-gray-700'
-            }`}>
+            className={`px-4 py-2 text-sm font-medium transition-colors ${activeTab === index
+              ? 'border-b-2 border-blue-600 text-blue-600'
+              : 'text-gray-500 hover:text-gray-700'
+              }`}>
             {plan.type}
           </button>
         ))}
@@ -36,13 +35,31 @@ export default function FloorPlans({ plans }) {
           <div key={index} className={activeTab === index ? 'block' : 'hidden'}>
             <h3 className="font-bold text-lg">{plan.type} - <span className="text-gray-600 font-medium">{plan.size}</span></h3>
             <div className="mt-4 relative w-full h-96 bg-gray-100 rounded-lg overflow-hidden">
-               <Image 
-                 src={plan.image} 
-                 alt={`${plan.type} floor plan`} 
-                 layout="fill"
-                 objectFit="contain"
-                 className="rounded-lg"
-               />
+              {(() => {
+                // Handle different possible image formats from Sanity
+                let imageUrl = null;
+
+                if (typeof plan?.image === 'string' && plan.image.trim() !== '') {
+                  imageUrl = plan.image.trim();
+                } else if (plan?.image?.asset?.url) {
+                  imageUrl = plan.image.asset.url;
+                } else if (plan?.image?.url) {
+                  imageUrl = plan.image.url;
+                }
+
+                return imageUrl ? (
+                  <Image
+                    src={imageUrl}
+                    alt={`${plan.type} floor plan`}
+                    fill
+                    className="object-contain rounded-lg"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <span className="text-gray-500">Floor plan image not available</span>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         ))}

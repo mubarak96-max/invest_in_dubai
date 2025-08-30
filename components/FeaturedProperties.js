@@ -11,9 +11,11 @@ import PortableText, { getPortableTextExcerpt } from '@/components/PortableText'
 export default function FeaturedProperties({ properties: sanityProperties }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Handle responsive behavior
   useEffect(() => {
+    setIsMounted(true);
     const checkScreenSize = () => {
       setIsDesktop(window.innerWidth >= 1024);
     };
@@ -42,20 +44,21 @@ export default function FeaturedProperties({ properties: sanityProperties }) {
 
   // Carousel navigation functions
   const nextSlide = () => {
-    const itemsToShow = isDesktop ? 3 : 1;
+    const itemsToShow = isMounted && isDesktop ? 3 : 1;
     const maxIndex = properties.length - itemsToShow;
     setCurrentIndex(prev => prev >= maxIndex ? 0 : prev + 1);
   };
 
   const prevSlide = () => {
-    const itemsToShow = isDesktop ? 3 : 1;
+    const itemsToShow = isMounted && isDesktop ? 3 : 1;
     const maxIndex = properties.length - itemsToShow;
     setCurrentIndex(prev => prev <= 0 ? maxIndex : prev - 1);
   };
 
   // Get visible properties based on screen size
   const getVisibleProperties = () => {
-    const itemsToShow = isDesktop ? 3 : 1;
+    // During SSR, always show 1 item to prevent hydration mismatch
+    const itemsToShow = isMounted && isDesktop ? 3 : 1;
     const endIndex = Math.min(currentIndex + itemsToShow, properties.length);
     return properties.slice(currentIndex, endIndex);
   };
@@ -99,11 +102,17 @@ export default function FeaturedProperties({ properties: sanityProperties }) {
               >
                 {/* Property Image */}
                 <div className="relative h-64 sm:h-72 overflow-hidden">
-                  <img
-                    src={property.image}
-                    alt={property.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
+                  {property.image && property.image.trim() !== '' ? (
+                    <img
+                      src={property.image}
+                      alt={property.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-500">No image available</span>
+                    </div>
+                  )}
 
                   {/* Category Tag */}
                   <div className={getCategoryStyle(property.category)}>

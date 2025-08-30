@@ -49,7 +49,7 @@ export default function PropertyHero({ property }) {
   const slides = property.images.map(src => ({ src }));
 
   useEffect(() => {
-    if (!stickyRef.current) return;
+    if (!stickyRef.current || typeof window === 'undefined') return;
 
     const observer = new IntersectionObserver(
       ([e]) => setIsSticky(e.intersectionRatio < 1),
@@ -69,11 +69,17 @@ export default function PropertyHero({ property }) {
     <div className="bg-white">
       {/* Image Gallery */}
       <div className="relative h-96 lg:h-[500px] overflow-hidden group cursor-pointer" onClick={() => setOpenLightbox(true)}>
-        <img
-          src={property.images[currentImageIndex]}
-          alt={property.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
+        {property.images[currentImageIndex] && property.images[currentImageIndex].trim() !== '' ? (
+          <img
+            src={property.images[currentImageIndex]}
+            alt={property.title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-500">No image available</span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
           <div className="flex items-center space-x-2 bg-black/50 text-white px-4 py-2 rounded-full">
             <Maximize className="w-5 h-5" />
@@ -161,11 +167,17 @@ export default function PropertyHero({ property }) {
                       : 'border-transparent hover:border-gray-300'
                   }`}
                 >
-                  <img
-                    src={image}
-                    alt={`Property view ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                  {image && image.trim() !== '' ? (
+                    <img
+                      src={image}
+                      alt={`Property view ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-400 text-xs">No image</span>
+                    </div>
+                  )}
                 </button>
               ))}
             </div>

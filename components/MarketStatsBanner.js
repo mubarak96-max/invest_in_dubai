@@ -75,6 +75,8 @@ export default function MarketStatsBanner({ stats }) {
 
   // Animate numbers on component mount
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const animateNumbers = () => {
       const duration = 2000; // 2 seconds
       const steps = 60;

@@ -17,7 +17,13 @@ export default function PropertyAgent({ property }) {
   return (
     <aside className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div className="flex items-center space-x-4 mb-4">
-        <img src={agent.image} alt={agent.name} className="w-14 h-14 rounded-full object-cover" />
+        {agent.image && agent.image.trim() !== '' ? (
+          <img src={agent.image} alt={agent.name} className="w-14 h-14 rounded-full object-cover" />
+        ) : (
+          <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center">
+            <span className="text-gray-500 text-sm font-semibold">{agent.name.charAt(0)}</span>
+          </div>
+        )}
         <div>
           <div className="font-semibold text-gray-900">{agent.name}</div>
           <div className="text-sm text-gray-600">{agent.title}</div>

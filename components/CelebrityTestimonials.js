@@ -6,9 +6,11 @@ import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 export default function CelebrityTestimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Handle responsive behavior
   useEffect(() => {
+    setIsMounted(true);
     const checkScreenSize = () => {
       setIsDesktop(window.innerWidth >= 1024);
     };
@@ -90,20 +92,21 @@ export default function CelebrityTestimonials() {
 
   // Carousel navigation functions
   const nextSlide = () => {
-    const itemsToShow = isDesktop ? 2 : 1;
+    const itemsToShow = isMounted && isDesktop ? 2 : 1;
     const maxIndex = testimonials.length - itemsToShow;
     setCurrentIndex(prev => prev >= maxIndex ? 0 : prev + 1);
   };
 
   const prevSlide = () => {
-    const itemsToShow = isDesktop ? 2 : 1;
+    const itemsToShow = isMounted && isDesktop ? 2 : 1;
     const maxIndex = testimonials.length - itemsToShow;
     setCurrentIndex(prev => prev <= 0 ? maxIndex : prev - 1);
   };
 
   // Get visible testimonials based on screen size
   const getVisibleTestimonials = () => {
-    const itemsToShow = isDesktop ? 2 : 1;
+    // During SSR, always show 1 item to prevent hydration mismatch
+    const itemsToShow = isMounted && isDesktop ? 2 : 1;
     const endIndex = Math.min(currentIndex + itemsToShow, testimonials.length);
     return testimonials.slice(currentIndex, endIndex);
   };
@@ -160,11 +163,17 @@ export default function CelebrityTestimonials() {
                 {/* Celebrity Info */}
                 <div className="flex items-center mb-6">
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-300 mr-4">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-full h-full object-cover"
-                    />
+                    {testimonial.image && testimonial.image.trim() !== '' ? (
+                      <img
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                        <span className="text-gray-500 text-xs">{testimonial.name.charAt(0)}</span>
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-white">

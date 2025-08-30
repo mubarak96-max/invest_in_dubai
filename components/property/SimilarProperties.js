@@ -25,7 +25,13 @@ export default function SimilarProperties({ currentProperty }) {
         {similar.map((p) => (
           <div key={p.id} className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
             <div className="h-40 overflow-hidden">
-              <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+              {p.image && p.image.trim() !== '' ? (
+                <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-500">No image available</span>
+                </div>
+              )}
             </div>
             <div className="p-4">
               <div className="text-blue-600 font-bold text-xl mb-1">{formatAED(p.price)}</div>

@@ -11,11 +11,20 @@ export default function PaymentPlan({ plan }) {
         <PieChart className="w-6 h-6 mr-3 text-blue-600" />
         Payment Plan
       </h2>
-      <ul className="space-y-3">
+      <ul className="space-y-4">
         {plan.map((item, index) => (
-          <li key={index} className="flex justify-between items-center bg-gray-50 p-3 rounded-md">
-            <span className="text-gray-700">{item.milestone}</span>
-            <span className="font-bold bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">{item.percentage}%</span>
+          <li key={index} className="bg-gray-50 p-4 rounded-md">
+            <div className="flex justify-between items-center mb-3">
+              <span className="text-gray-700 font-medium">{item.milestone}</span>
+              <span className="font-bold bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">{item.percentage}%</span>
+            </div>
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-3">
+              <div
+                className="bg-blue-600 h-3 rounded-full transition-all duration-700 ease-out"
+                style={{ width: `${item.percentage}%` }}
+              ></div>
+            </div>
           </li>
         ))}
       </ul>

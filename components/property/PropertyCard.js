@@ -8,7 +8,13 @@ export default function PropertyCard({ property }) {
     <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group flex flex-col">
       <Link href={`/property/${id}/${slug}`} className="block">
         <div className="relative overflow-hidden">
-          <img src={image} alt={title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+          {image && image.trim() !== '' ? (
+            <img src={image} alt={title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+          ) : (
+            <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500">No image available</span>
+            </div>
+          )}
           {category === 'off-plan' && handover && (
             <div className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
               Off-Plan: Handover {handover}
