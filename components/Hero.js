@@ -27,7 +27,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/60" />
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 max-w-4xl">
+      <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl w-full">
         {/* Main Headline */}
         <h1 className="text-5xl md:text-7xl font-bold mb-6">
           Find Your Perfect
@@ -48,8 +48,8 @@ export default function HeroSection() {
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`px-6 py-2 rounded-full transition-all duration-200 border ${selectedCategory === category
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/30'
+                  ? 'bg-blue-600 text-white border-blue-600'
+                  : 'bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/30'
                   }`}
               >
                 {category}
