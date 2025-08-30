@@ -57,23 +57,23 @@ export default function HeroSection() {
             ))}
           </div>
 
-          <form onSubmit={handleSearch} className="bg-white rounded-full p-2 shadow-2xl">
-            <div className="flex items-center">
-              <div className="flex-1 flex items-center pl-6">
-                <MapPin className="h-5 w-5 text-gray-400 mr-3" />
+          <form onSubmit={handleSearch} className="bg-white rounded-full p-2 shadow-2xl max-w-full">
+            <div className="flex items-center min-w-0">
+              <div className="flex-1 flex items-center pl-4 sm:pl-6 min-w-0">
+                <MapPin className="h-5 w-5 text-gray-400 mr-2 sm:mr-3 flex-shrink-0" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by location, property type, or developer..."
-                  className="flex-1 py-4 text-gray-900 placeholder-gray-500 focus:outline-none text-lg"
+                  placeholder="Search location, property type..."
+                  className="flex-1 py-3 sm:py-4 text-gray-900 placeholder-gray-500 focus:outline-none text-sm sm:text-lg min-w-0"
                 />
               </div>
               <button
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full transition-colors duration-200 ml-2"
+                className="bg-blue-600 hover:bg-blue-700 text-white p-3 sm:p-4 rounded-full transition-colors duration-200 ml-2 flex-shrink-0"
               >
-                <Search className="h-6 w-6" />
+                <Search className="h-5 w-5 sm:h-6 sm:w-6" />
               </button>
             </div>
           </form>
