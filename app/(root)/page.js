@@ -8,12 +8,13 @@ import HeroSection from '@/components/Hero'
 import InvestmentCalculator from '@/components/InvestmentCalculator'
 import MarketStatsBanner from '@/components/MarketStatsBanner'
 import RecentTransactions from '@/components/RecentTransactions'
+import RecentBlogs from '@/components/RecentBlogs'
 import { client, queries } from '@/lib/sanity'
 import React from 'react'
 
 export const revalidate = 60
 console.log('Fetching homepage data...');
-const [marketStats, recentTransactions, featuredProps, areas, featuredProjects] = await Promise.all([
+const [marketStats, recentTransactions, featuredProps, areas, featuredProjects, recentBlogs] = await Promise.all([
   client.fetch(queries.allMarketActivity),
   client.fetch(queries.activeRecentTransactions),
   client.fetch(`*[_type=='property' && defined(featured) && featured==true][0...12]{
@@ -53,7 +54,8 @@ const [marketStats, recentTransactions, featuredProps, areas, featuredProjects] 
       propertyTypes,
       'developer': developer->name,
       'beds': floorPlans[0].bedrooms
-    }`)
+    }`),
+  client.fetch(queries.recentBlogs)
 ]);
 
 console.log('Areas count:', areas?.length || 0);
@@ -69,6 +71,7 @@ const Home = async () => {
       <MarketStatsBanner stats={marketStats} />
       <FeaturedProperties properties={featuredProps} />
       <FeaturedProjects projects={featuredProjects} />
+      <RecentBlogs blogs={recentBlogs} />
       <InvestmentCalculator />
       <CommunitiesSection items={areas} />
       <CelebrityTestimonials />
