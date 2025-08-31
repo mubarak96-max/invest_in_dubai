@@ -5,8 +5,8 @@ import AreaDevelopers from '@/components/area/AreaDevelopers';
 import { client } from '@/lib/sanity';
 import { notFound } from 'next/navigation';
 
-// Revalidate every hour
-export const revalidate = 3600;
+// Revalidate every minute for fresh content
+export const revalidate = 60;
 
 // Generate static params from Sanity
 export async function generateStaticParams() {

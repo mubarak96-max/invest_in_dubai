@@ -2,8 +2,8 @@ import { client } from '@/lib/sanity';
 import { notFound, redirect } from 'next/navigation';
 import ProjectPageClient from '@/components/project/ProjectPageClient';
 
-// Revalidate every hour
-export const revalidate = 3600;
+// Revalidate every minute for fresh content
+export const revalidate = 60;
 
 // Fetch project data from Sanity
 async function getProjectData(id) {

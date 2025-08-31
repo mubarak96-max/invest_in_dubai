@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
     };
 }
 
-export const revalidate = 3600;
+export const revalidate = 60; // Revalidate every minute for fresh content
 
 export default async function BlogDetailPage({ params }) {
     try {

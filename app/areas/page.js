@@ -2,8 +2,8 @@ import AreaCard from '@/components/area/AreaCard';
 import { client } from '@/lib/sanity';
 import AreasClient from '@/components/AreasClient';
 
-// Revalidate every hour
-export const revalidate = 3600;
+// Revalidate every minute for fresh content
+export const revalidate = 60;
 
 // Fetch areas from Sanity
 async function getAreas() {

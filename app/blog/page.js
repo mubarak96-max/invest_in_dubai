@@ -6,7 +6,7 @@ export const metadata = {
     description: 'Stay updated with the latest Dubai real estate market insights, investment tips, and property trends. Expert analysis and guides for property investors.',
 };
 
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 60; // Revalidate every minute for fresh content
 
 export default async function BlogPage() {
     try {
