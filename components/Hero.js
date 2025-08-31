@@ -40,14 +40,15 @@ export default function HeroSection() {
         </p>
 
         {/* Search Bar */}
-        <div className="max-w-2xl mx-auto">
+        {/* 60% width on desktop, full width on mobile */}
+        <div className="w-full max-w-md mx-auto lg:w-3/5 lg:max-w-none">
           {/* Category Selection */}
-          <div className="mb-6 flex flex-wrap justify-center gap-3">
+          <div className="mb-4 flex flex-wrap justify-center gap-2">
             {['Buy', 'Rent', 'Off-Plan'].map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-full transition-all duration-200 border ${selectedCategory === category
+                className={`px-4 py-1.5 text-sm rounded-full transition-all duration-200 border ${selectedCategory === category
                   ? 'bg-blue-600 text-white border-blue-600'
                   : 'bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-white/30'
                   }`}
@@ -57,23 +58,23 @@ export default function HeroSection() {
             ))}
           </div>
 
-          <form onSubmit={handleSearch} className="bg-white rounded-full p-2 shadow-2xl max-w-full">
+          <form onSubmit={handleSearch} className="bg-white rounded-full p-1.5 shadow-xl w-full">
             <div className="flex items-center min-w-0">
-              <div className="flex-1 flex items-center pl-4 sm:pl-6 min-w-0">
-                <MapPin className="h-5 w-5 text-gray-400 mr-2 sm:mr-3 flex-shrink-0" />
+              <div className="flex-1 flex items-center pl-3 sm:pl-4 min-w-0">
+                <MapPin className="h-4 w-4 text-gray-400 mr-2 flex-shrink-0" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search location, property type..."
-                  className="flex-1 py-3 sm:py-4 text-gray-900 placeholder-gray-500 focus:outline-none text-sm sm:text-lg min-w-0"
+                  className="flex-1 py-2 text-gray-900 placeholder-gray-500 focus:outline-none text-sm min-w-0"
                 />
               </div>
               <button
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white p-3 sm:p-4 rounded-full transition-colors duration-200 ml-2 flex-shrink-0"
+                className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-colors duration-200 ml-1 flex-shrink-0"
               >
-                <Search className="h-5 w-5 sm:h-6 sm:w-6" />
+                <Search className="h-4 w-4" />
               </button>
             </div>
           </form>

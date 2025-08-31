@@ -64,13 +64,15 @@ export default defineType({
             name: 'publishedAt',
             title: 'Published Date',
             type: 'datetime',
+            initialValue: () => new Date().toISOString(),
             validation: Rule => Rule.required()
         }),
         defineField({
             name: 'featured',
             title: 'Featured Post',
             type: 'boolean',
-            description: 'Mark this post as featured to display prominently'
+            description: 'Mark this post as featured to show it prominently',
+            initialValue: false
         }),
         defineField({
             name: 'content',
@@ -142,27 +144,6 @@ export default defineType({
             title: 'Estimated Reading Time (minutes)',
             type: 'number',
             description: 'Estimated reading time in minutes'
-        }),
-        defineField({
-            name: 'author',
-            title: 'Author',
-            type: 'reference',
-            to: { type: 'author' },
-            validation: Rule => Rule.required()
-        }),
-        defineField({
-            name: 'publishedAt',
-            title: 'Published Date',
-            type: 'datetime',
-            initialValue: () => new Date().toISOString(),
-            validation: Rule => Rule.required()
-        }),
-        defineField({
-            name: 'featured',
-            title: 'Featured Post',
-            type: 'boolean',
-            description: 'Mark this post as featured to show it prominently',
-            initialValue: false
         })
     ],
 
