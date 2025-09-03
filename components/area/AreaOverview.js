@@ -108,30 +108,41 @@ export default function AreaOverview({ description, location, averagePrice, aver
             </div>
           </div>
 
-          {/* Demographics */}
-          {data.demographics && (
+          {/* Must Know */}
+          {data.mustKnow && data.mustKnow.length > 0 && (
             <div className="bg-gray-50 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Demographics</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Must Know About the Area</h3>
               <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Expat Population</span>
-                  <span className="font-semibold">{data.demographics.expatPercentage}%</span>
+                {data.mustKnow.map((item, idx) => (
+                  <div key={idx}>
+                    <div className="text-sm font-medium text-gray-800">{item.subtitle}</div>
+                    <div className="text-sm text-gray-600">{item.caption}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Pros & Cons */}
+          {(data.prosCons?.pros?.length || data.prosCons?.cons?.length) && (
+            <div className="bg-white rounded-xl p-6 border border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Pros &amp; Cons</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="text-sm text-gray-600 mb-2">Pros</div>
+                  <ul className="list-disc pl-5 text-gray-700">
+                    {data.prosCons?.pros?.map((p, i) => (
+                      <li key={i}>{p}</li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Average Age</span>
-                  <span className="font-semibold">{data.demographics.averageAge} years</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Family Friendly</span>
-                  <span className="font-semibold">
-                    {data.demographics.familyFriendly ? 'Yes' : 'No'}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Pet Friendly</span>
-                  <span className="font-semibold">
-                    {data.demographics.petFriendly ? 'Yes' : 'No'}
-                  </span>
+                <div>
+                  <div className="text-sm text-gray-600 mb-2">Cons</div>
+                  <ul className="list-disc pl-5 text-gray-700">
+                    {data.prosCons?.cons?.map((c, i) => (
+                      <li key={i}>{c}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
@@ -155,6 +166,21 @@ export default function AreaOverview({ description, location, averagePrice, aver
                   <span className="text-gray-600">Investment Rating</span>
                   <span className="font-semibold">{data.marketTrends.investmentRating}/5</span>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* Map */}
+          {data.coordinates && (data.coordinates.lat && data.coordinates.lng) && (
+            <div className="bg-white rounded-xl p-4 border border-gray-100">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Map</h3>
+              <div className="w-full h-40 rounded overflow-hidden">
+                <iframe
+                  title="Area map"
+                  className="w-full h-full"
+                  src={`https://api.maptiler.com/maps/streets/?key=${process.env.NEXT_PUBLIC_MAPTILER_KEY}#12/${data.coordinates.lat}/${data.coordinates.lng}`}
+                  sandbox="allow-scripts allow-same-origin"
+                />
               </div>
             </div>
           )}

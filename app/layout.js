@@ -9,6 +9,10 @@ export const metadata = {
   verification: {
     google: "Zz9WHl_28IaDuvbcMQLp2Tbkfs8GzeOE2Qe1LmimCj8",
   },
+  icons: {
+    icon: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
 export default function RootLayout({ children }) {

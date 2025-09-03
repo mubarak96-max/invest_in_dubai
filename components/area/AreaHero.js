@@ -1,8 +1,7 @@
 'use client';
 
-import { MapPin, TrendingUp, Home, Star } from 'lucide-react';
+import { MapPin, TrendingUp, Star } from 'lucide-react';
 import { formatNumber } from '@/lib/format';
-import PortableText from '@/components/PortableText';
 
 export default function AreaHero({ areaData }) {
   return (
@@ -31,9 +30,7 @@ export default function AreaHero({ areaData }) {
             </h1>
 
             <div className="text-xl text-gray-300 leading-relaxed max-w-2xl">
-              {areaData.longDescription && Array.isArray(areaData.longDescription) ? (
-                <PortableText value={areaData.longDescription} />
-              ) : areaData.description ? (
+              {areaData.description ? (
                 <p>{areaData.description}</p>
               ) : (
                 <p>Discover this amazing community in Dubai.</p>
@@ -77,45 +74,6 @@ export default function AreaHero({ areaData }) {
               </div>
               <div className="text-2xl font-bold">
                 {areaData.averageRentalYield}%
-              </div>
-            </div>
-
-            {/* Properties Available */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="bg-purple-500 p-2 rounded-lg">
-                  <Home className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-sm font-medium text-gray-300">Properties</span>
-              </div>
-              <div className="text-2xl font-bold">
-                {areaData.properties}+
-              </div>
-            </div>
-
-            {/* Investment Rating */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-              <div className="flex items-center space-x-3 mb-3">
-                <div className="bg-orange-500 p-2 rounded-lg">
-                  <Star className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-sm font-medium text-gray-300">Rating</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="text-2xl font-bold">
-                  {areaData.marketTrends?.investmentRating || '4.5'}
-                </div>
-                <div className="flex space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`w-4 h-4 ${i < Math.floor(areaData.marketTrends?.investmentRating || 4.5)
-                        ? 'text-yellow-400 fill-current'
-                        : 'text-gray-400'
-                        }`}
-                    />
-                  ))}
-                </div>
               </div>
             </div>
 

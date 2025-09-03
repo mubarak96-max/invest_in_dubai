@@ -2,7 +2,7 @@ import AreaHero from '@/components/area/AreaHero';
 import AreaOverview from '@/components/area/AreaOverview';
 import AreaProperties from '@/components/area/AreaProperties';
 import AreaDevelopers from '@/components/area/AreaDevelopers';
-import { client } from '@/lib/sanity';
+import { client, queries } from '@/lib/sanity';
 import { notFound } from 'next/navigation';
 
 // Revalidate every minute for fresh content
@@ -11,11 +11,7 @@ export const revalidate = 60;
 // Generate static params from Sanity
 export async function generateStaticParams() {
   try {
-    const areas = await client.fetch(`
-      *[_type == "area" && defined(slug.current)] {
-        "slug": slug.current
-      }
-    `);
+    const areas = await client.fetch(`*[_type == "area" && defined(slug.current)]{"slug": slug.current}`);
     return areas.map(area => ({ slug: area.slug }));
   } catch (error) {
     console.error('Error generating static params for areas:', error);
@@ -26,31 +22,14 @@ export async function generateStaticParams() {
 // Fetch area data from Sanity
 async function getAreaData(slug) {
   try {
-    const area = await client.fetch(`
-      *[_type == "area" && slug.current == $slug][0] {
-        _id,
-        name,
-        "slug": slug.current,
-        description,
-        longDescription,
-        "image": image.asset->url,
-        "images": images[].asset->url,
-        "avgPrice": averagePrice,
-        "properties": propertyCount,
-        location,
-        connectivity,
-        demographics,
-        marketTrends,
-        amenities,
-        schools,
-        hospitals,
-        shopping,
-        restaurants,
-        featured,
-        seoTitle,
-        seoDescription
-      }
-    `, { slug });
+    const area = await client.fetch(queries.areaBySlug, { slug });
+
+    // ensure arrays exist to avoid runtime errors
+    if (area) {
+      area.images = area.images || [];
+      area.mustKnow = area.mustKnow || [];
+      area.prosCons = area.prosCons || { pros: [], cons: [] };
+    }
 
     return area;
   } catch (error) {

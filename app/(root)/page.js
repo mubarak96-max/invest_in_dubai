@@ -32,15 +32,7 @@ const [marketStats, recentTransactions, featuredProps, areas, featuredProjects, 
       'handover': handover,
       description
     }`),
-  client.fetch(`*[_type=='area'][0...5]{
-      _id,
-      name,
-      'slug': slug.current,
-      'image': image.asset->url,
-      'description': description,
-      'avgPrice': averagePrice,
-      'properties': propertyCount
-    }`),
+  client.fetch(`${queries.allAreas}[0...5]`),
   client.fetch(`*[_type=='project' && defined(featured) && featured==true][0...6]{
       _id,
       title,

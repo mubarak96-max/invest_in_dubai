@@ -131,9 +131,7 @@ export default function CommunitiesSection({ items }) {
                           }
                         </span> avg. price
                       </div>
-                      {/* <div className="text-sm text-gray-500">
-                        {community.properties || community.propertyCount || 0} properties
-                      </div> */}
+                      {/* properties count removed from schema; omit display */}
                     </div>
 
                     {/* Learn More Button */}

@@ -1,5 +1,5 @@
 import AreaCard from '@/components/area/AreaCard';
-import { client } from '@/lib/sanity';
+import { client, queries } from '@/lib/sanity';
 import AreasClient from '@/components/AreasClient';
 
 // Revalidate every minute for fresh content
@@ -8,22 +8,7 @@ export const revalidate = 60;
 // Fetch areas from Sanity
 async function getAreas() {
   try {
-    const areas = await client.fetch(`
-      *[_type == "area"] | order(name asc) {
-        _id,
-        name,
-        "slug": slug.current,
-        "image": image.asset->url,
-        description,
-        "avgPrice": averagePrice,
-        "properties": propertyCount,
-        location,
-        connectivity,
-        demographics,
-        marketTrends,
-        featured
-      }
-    `);
+    const areas = await client.fetch(queries.allAreas);
     return areas;
   } catch (error) {
     console.error('Error fetching areas:', error);

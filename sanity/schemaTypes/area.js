@@ -110,12 +110,7 @@ export default {
       type: 'number',
       validation: Rule => Rule.positive()
     },
-    {
-      name: 'propertyCount',
-      title: 'Number of Properties',
-      type: 'number',
-      validation: Rule => Rule.min(0)
-    },
+    // number of properties removed (use queries to count when needed)
     {
       name: 'amenities',
       title: 'Area Amenities',
@@ -162,31 +157,28 @@ export default {
       ]
     },
     {
-      name: 'demographics',
-      title: 'Demographics',
+      name: 'mustKnow',
+      title: 'Must Know About the Area',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'subtitle', title: 'Subtitle', type: 'string' },
+            { name: 'caption', title: 'Caption', type: 'text', rows: 2 }
+          ]
+        }
+      ],
+      description: 'Key things potential residents should know. Renders as subtitle + small caption.'
+    },
+
+    {
+      name: 'prosCons',
+      title: 'Pros and Cons',
       type: 'object',
       fields: [
-        {
-          name: 'expatPercentage',
-          title: 'Expat Population (%)',
-          type: 'number',
-          validation: Rule => Rule.min(0).max(100)
-        },
-        {
-          name: 'averageAge',
-          title: 'Average Age',
-          type: 'number'
-        },
-        {
-          name: 'familyFriendly',
-          title: 'Family Friendly',
-          type: 'boolean'
-        },
-        {
-          name: 'petFriendly',
-          title: 'Pet Friendly',
-          type: 'boolean'
-        }
+        { name: 'pros', title: 'Pros', type: 'array', of: [{ type: 'string' }] },
+        { name: 'cons', title: 'Cons', type: 'array', of: [{ type: 'string' }] }
       ]
     },
     {
