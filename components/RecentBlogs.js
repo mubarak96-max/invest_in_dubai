@@ -21,82 +21,78 @@ export default function RecentBlogs({ blogs }) {
                     </p>
                 </div>
 
-                {/* Featured Blog (First one) */}
-                {blogs.length > 0 && (
-                    <div className="mb-12">
-                        <Link href={`/blog/${blogs[0].slug || blogs[0].slug?.current}`} className="group">
-                            <article className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                                <div className="md:flex">
-                                    <div className="md:w-1/2">
-                                        {blogs[0].featuredImage && (
-                                            <div className="relative h-64 md:h-80">
-                                                <Image
-                                                    src={urlFor(blogs[0].featuredImage).width(800).height(600).url()}
-                                                    alt={blogs[0].featuredImage.alt || blogs[0].title}
-                                                    fill
-                                                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                                />
-                                                {blogs[0].category && (
-                                                    <div className="absolute top-4 left-4">
-                                                        <span
-                                                            className="text-white px-3 py-1 rounded-full text-sm font-medium"
-                                                            style={{ backgroundColor: blogs[0].category.color || '#3B82F6' }}
-                                                        >
-                                                            {blogs[0].category.name}
-                                                        </span>
-                                                    </div>
-                                                )}
+                {/* Featured Blogs Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    {blogs.slice(0, 3).map((blog, index) => (
+                        <Link key={blog._id} href={`/blog/${blog.slug || blog.slug?.current}`} className="group">
+                            <article className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full min-h-[500px]">
+                                {blog.featuredImage && (
+                                    <div className="relative h-64 overflow-hidden flex-shrink-0">
+                                        <Image
+                                            src={urlFor(blog.featuredImage).width(600).height(400).url()}
+                                            alt={blog.featuredImage.alt || blog.title}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                        />
+                                        {blog.category && (
+                                            <div className="absolute top-4 left-4">
+                                                <span
+                                                    className="text-white px-3 py-1 rounded-full text-sm font-medium"
+                                                    style={{ backgroundColor: blog.category.color || '#3B82F6' }}
+                                                >
+                                                    {blog.category.name}
+                                                </span>
                                             </div>
                                         )}
                                     </div>
-                                    <div className="md:w-1/2 p-8">
-                                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
-                                            {blogs[0].title}
-                                        </h3>
-                                        {blogs[0].excerpt && (
-                                            <p className="text-gray-600 mb-6 text-lg line-clamp-3">
-                                                {blogs[0].excerpt}
-                                            </p>
-                                        )}
-                                        <div className="flex items-center justify-between text-sm text-gray-500">
-                                            <div className="flex items-center">
-                                                {blogs[0].author?.image && (
-                                                    <Image
-                                                        src={blogs[0].author.image.asset?.url || blogs[0].author.image.url}
-                                                        alt={blogs[0].author.name}
-                                                        width={32}
-                                                        height={32}
-                                                        className="rounded-full mr-3"
-                                                    />
-                                                )}
-                                                {blogs[0].author && (
-                                                    <span className="font-medium">{blogs[0].author.name}</span>
-                                                )}
-                                            </div>
-                                            <div className="text-right">
-                                                <div>{format(blogs[0].publishedAt, 'MMM d, yyyy')}</div>
-                                                {blogs[0].readingTime && (
-                                                    <div className="text-xs">{blogs[0].readingTime} min read</div>
-                                                )}
-                                            </div>
+                                )}
+                                <div className="p-6 flex flex-col h-full">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                        {blog.title}
+                                    </h3>
+                                    {blog.excerpt && (
+                                        <p className="text-gray-600 mb-4 text-base line-clamp-4 flex-grow">
+                                            {blog.excerpt}
+                                        </p>
+                                    )}
+                                    <div className="flex items-center justify-between text-sm text-gray-500 mt-auto pt-4">
+                                        <div className="flex items-center">
+                                            {blog.author?.image && (
+                                                <Image
+                                                    src={blog.author.image.asset?.url || blog.author.image.url}
+                                                    alt={blog.author.name}
+                                                    width={28}
+                                                    height={28}
+                                                    className="rounded-full mr-3"
+                                                />
+                                            )}
+                                            {blog.author && (
+                                                <span className="font-medium">{blog.author.name}</span>
+                                            )}
+                                        </div>
+                                        <div className="text-right">
+                                            <div>{format(blog.publishedAt, 'MMM d, yyyy')}</div>
+                                            {blog.readingTime && (
+                                                <div className="text-xs">{blog.readingTime} min read</div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
                             </article>
                         </Link>
-                    </div>
-                )}
+                    ))}
+                </div>
 
-                {/* Grid of other blogs */}
-                {blogs.length > 1 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                        {blogs.slice(1, 4).map((blog) => (
+                {/* Additional blogs if more than 3 exist */}
+                {blogs.length > 3 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                        {blogs.slice(3, 6).map((blog) => (
                             <Link key={blog._id} href={`/blog/${blog.slug || blog.slug?.current}`} className="group">
-                                <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                                <article className="bg-gray-50 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                                     {blog.featuredImage && (
-                                        <div className="relative h-48 overflow-hidden">
+                                        <div className="relative h-44 overflow-hidden">
                                             <Image
-                                                src={urlFor(blog.featuredImage).width(600).height(400).url()}
+                                                src={urlFor(blog.featuredImage).width(500).height(300).url()}
                                                 alt={blog.featuredImage.alt || blog.title}
                                                 fill
                                                 className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -113,12 +109,12 @@ export default function RecentBlogs({ blogs }) {
                                             )}
                                         </div>
                                     )}
-                                    <div className="p-6">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                    <div className="p-5">
+                                        <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
                                             {blog.title}
                                         </h3>
                                         {blog.excerpt && (
-                                            <p className="text-gray-600 mb-4 text-sm line-clamp-2">
+                                            <p className="text-gray-600 mb-3 text-sm line-clamp-2">
                                                 {blog.excerpt}
                                             </p>
                                         )}
