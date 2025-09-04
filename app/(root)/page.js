@@ -1,6 +1,5 @@
 import CelebrityTestimonials from '@/components/CelebrityTestimonials'
 import CommunitiesSection from '@/components/CommunitiesSection'
-import FeaturedProperties from '@/components/FeaturedProperties'
 import FeaturedProjects from '@/components/FeaturedProjects'
 import FeaturesSection from '@/components/FeaturesSection'
 import FreeConsultationCTA from '@/components/FreeConsultationCTA'
@@ -14,44 +13,33 @@ import React from 'react'
 
 export const revalidate = 60
 console.log('Fetching homepage data...');
-const [marketStats, recentTransactions, featuredProps, areas, featuredProjects, recentBlogs] = await Promise.all([
+const [marketStats, recentTransactions, areas, featuredProjects, allProjects, recentBlogs] = await Promise.all([
   client.fetch(queries.allMarketActivity),
   client.fetch(queries.activeRecentTransactions),
-  client.fetch(`*[_type=='property' && defined(featured) && featured==true][0...12]{
-      _id,
-      title,
-      'slug': slug.current,
-      'image': images[0].asset->url,
-      price,
-      'category': category,
-      'type': propertyType,
-      'beds': bedrooms,
-      'baths': bathrooms,
-      'sqft': area,
-      'address': coalesce(location.building + ', ' + location.community, location.community),
-      'handover': handover,
-      description
-    }`),
   client.fetch(`${queries.allAreas}[0...5]`),
-  client.fetch(`*[_type=='project' && defined(featured) && featured==true][0...6]{
-      _id,
-      title,
-      'slug': slug.current,
-      'image': images[0].asset->url,
-      startingPrice,
-      'priceDisplay': select(defined(startingPrice) => 'Starting from AED ' + string(startingPrice), true => 'Contact for Price'),
-      handover,
-      'address': coalesce(location.building + ', ' + location.community, location.community),
-      projectStatus,
-      propertyTypes,
-      'developer': developer->name,
-      'beds': floorPlans[0].bedrooms
-    }`),
+  client.fetch(queries.featuredProjects),
+  client.fetch(`*[_type == "project"][0...6]{
+    _id,
+    title,
+    "slug": slug.current,
+    "image": images[0].asset->url,
+    startingPrice,
+    handover,
+    "address": coalesce(location.address, area->name),
+    projectStatus,
+    propertyTypes,
+    featured
+  }`),
   client.fetch(queries.recentBlogs)
 ]);
 
 console.log('Areas count:', areas?.length || 0);
 console.log('Featured projects count:', featuredProjects?.length || 0);
+console.log('All projects count:', allProjects?.length || 0);
+console.log('Featured projects:', featuredProjects);
+
+// Use featured projects if available, otherwise use first few all projects
+const projectsToShow = featuredProjects?.length > 0 ? featuredProjects : allProjects;
 
 
 const Home = async () => {
@@ -61,8 +49,7 @@ const Home = async () => {
       <FeaturesSection />
       <RecentTransactions items={recentTransactions} />
       <MarketStatsBanner stats={marketStats} />
-      <FeaturedProperties properties={featuredProps} />
-      <FeaturedProjects projects={featuredProjects} />
+      <FeaturedProjects projects={projectsToShow} />
       <RecentBlogs blogs={recentBlogs} />
       <InvestmentCalculator />
       <CommunitiesSection items={areas} />
